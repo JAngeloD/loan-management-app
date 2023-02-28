@@ -1,7 +1,7 @@
 import React from 'react'
 import Dashboard from './dashboard/Dashboard'
 
-import 'bootstrap'
+
 
 function App() {
   return (

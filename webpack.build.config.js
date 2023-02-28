@@ -15,11 +15,10 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader'
-        ],
-        include: defaultInclude
+        ]
       },
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,
         use: [{ loader: 'babel-loader' }],
         include: defaultInclude
       },

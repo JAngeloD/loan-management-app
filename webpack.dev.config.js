@@ -38,15 +38,17 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('development')
     })
   ],
+  stats: {
+    colors: true,
+    chunks: false,
+    children: false
+  },
   devtool: 'cheap-source-map',
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
-    stats: {
-      colors: true,
-      chunks: false,
-      children: false
+    static: {
+      directory: path.resolve(__dirname, 'dist')
     },
-    before() {
+    onBeforeSetupMiddleware () {
       spawn(
         'electron',
         ['.'],

@@ -37,11 +37,17 @@ function Navbar() {
                     </ul>
                 </div>
             </div>
-            <div class="container-fluid px-sm-2 px-0 w-75 w-d-50">
-                <div class="row row-cols-2 h-100">
-                    <div class="bg-primary h-25">test1</div>
-                    <div class="bg-primary h-25">test2</div>
-                    <div class="col-12 bg-primary h-50">test3</div>
+            <div class="container flex-shrink-1">
+                <div class="row row-cols-2 vh-100">
+                    <div class="container">
+                        <div class="bg-primary h-75 m-5">test</div>
+                    </div>
+                    <div class="container">
+                        <div class="bg-primary h-75 m-5">test</div>
+                    </div>
+                    <div class="container">
+                        <div class="bg-primary w-100 h-75 m-5">test</div>
+                    </div>
                 </div>
             </div>
         </div>

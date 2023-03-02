@@ -1,12 +1,13 @@
 import React from 'react'
 import Dashboard from './dashboard/Dashboard'
-
-
+import Navbar from './Navbar/Navbar'
 
 function App() {
   return (
     <>
-      <Dashboard></Dashboard>
+      <div class="container-fluid">
+        <Navbar></Navbar>
+      </div>
     </>
   )
 }

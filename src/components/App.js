@@ -6,7 +6,9 @@ function App() {
   return (
     <>
       <div class="container-fluid">
-        <Navbar></Navbar>
+        <div class="row flex-nowrap">
+          <Navbar></Navbar>
+        </div>
       </div>
     </>
   )

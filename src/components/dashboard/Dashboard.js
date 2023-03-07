@@ -6,7 +6,6 @@ function Dashboard() {
     <>
       <div class="container flex-shrink-1 bg-dark-subtle p-4 ">
         <div class="row g-6 mb-6">
-
           <div class="col-xl-3 col-sm-6 col-12 p-3">
             <div class="card shadow border-0 h-100">
               <div class="card-body">
@@ -85,7 +84,7 @@ function Dashboard() {
         </div>
 
         <div class="card shadow border-0 mb-7 p-2 mt-5">
-          <div class="card-header">
+          <div class="card-header bg-dark-subtle">
             <h5 class="mb-0">Borrowers</h5>
           </div>
           <div class="table-responsive">

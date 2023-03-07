@@ -1,5 +1,4 @@
 import React from 'react'
-import Dashboard from '../dashboard/Dashboard'
 
 function Navbar() {
   return (
@@ -19,7 +18,7 @@ function Navbar() {
             </li>
             <li>
               <a href="#" class="nav-link px-0 align-middle">
-                <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Borrowers</span>
+                <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Add Borrower</span>
               </a>
             </li>
             <li>
@@ -36,7 +35,6 @@ function Navbar() {
           </ul>
         </div>
       </div>
-      <Dashboard></Dashboard>
     </>
   )
 }

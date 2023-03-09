@@ -2,6 +2,30 @@ import React from 'react'
 
 
 function Dashboard() {
+  const testdata = {
+    data: [{
+      name: "Ramesh",
+      nextpaymentdate: "Fadatare",
+      paymentval: "$99.00"
+    },
+    {
+      name: "Tom",
+      nextpaymentdate: "Cruise",
+      paymentval: "$99.00"
+    },
+    {
+      name: "Tony",
+      nextpaymentdate: "Stark",
+      paymentval: "$99.00"
+    },
+    {
+      name: "John",
+      nextpaymentdate: "Cena",
+      paymentval: "$99.00"
+    }]
+  }
+
+
   return (
     <>
       <div class="container flex-shrink-1 bg-dark-subtle p-4 ">
@@ -94,36 +118,10 @@ function Dashboard() {
                   <th scope="col">Name</th>
                   <th scope="col">Next Payment</th>
                   <th scope="col">Offer</th>
-                  <th scope="col">Goated?</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Sans from Undertale</td>
-                  <td>Feb 15, 2021</td>
-                  <td>$69.00</td>
-                  <td>Yes</td>
-                  <td class="text-end">
-                    <a class="btn btn-sm btn-neutral">View</a>
-                    <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Filbo from Bugsnax</td>
-                  <td>Apr 15, 2021</td>
-                  <td>$Bunger</td>
-                  <td>Perhaps</td>
-                  <td class="text-end">
-                    <a class="btn btn-sm btn-neutral">View</a>
-                    <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </td>
-                </tr>
               </tbody>
             </table>
           </div>

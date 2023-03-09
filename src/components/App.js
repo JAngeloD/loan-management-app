@@ -18,14 +18,17 @@ function App() {
           {(() => {
             switch (mainState) {
               case "dashboard":
-                return <Dashboard/>
+                return <Dashboard handleState={handleState}/>
               case "borrowerform":
                 return <BorrowerForm/>
+              case "archive":
+                return null
+              case "settings":
+                return null
               default:
                 return <Dashboard/>
             }
           })()}
-
         </div>
       </div>
     </>

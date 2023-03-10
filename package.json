@@ -41,7 +41,8 @@
     "postcss": "^8.4.8",
     "precss": "^4.0.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-table": "^7.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",

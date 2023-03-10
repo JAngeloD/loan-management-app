@@ -1,4 +1,5 @@
 import React from 'react'
+import BorrowerTable from './BorrowerTable'
 
 
 function Dashboard() {
@@ -112,18 +113,7 @@ function Dashboard() {
             <h5 class="mb-0">Borrowers</h5>
           </div>
           <div class="table-responsive">
-            <table class="table table-hover table-nowrap">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Next Payment</th>
-                  <th scope="col">Offer</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
+            <BorrowerTable></BorrowerTable>
           </div>
         </div>
       </div>

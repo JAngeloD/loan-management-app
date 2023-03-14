@@ -1,6 +1,17 @@
 import React from 'react'
-import { useTable, useSortBy } from 'react-table'
+import { useTable, useSortBy, useGlobalFilter, usePagination } from 'react-table'
 
+
+const SearchBar = ({ filter, setFilter }) => {
+  return (
+    <span className='filter'>
+      <input value={filter || ''}
+        onChange={e => setFilter(e.target.value)}
+        placeholder='Search...'
+      />
+    </span>
+  );
+}
 
 function BorrowerTable() {
   const data = React.useMemo(
@@ -28,7 +39,7 @@ function BorrowerTable() {
         nextpaymentdate: "2022-10-21",
         paymentval: "$979.00",
         remainingterm: 1
-      },
+      }
     ],
     []
   )
@@ -62,8 +73,10 @@ function BorrowerTable() {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    row,
     prepareRow,
+    state: {globalFilter},
+    setGlobalFilter
   } = useTable(
     {
       columns,
@@ -78,39 +91,39 @@ function BorrowerTable() {
         ]
       }
     },
+    useGlobalFilter,
     useSortBy
   )
 
   return (
-    <table class="table table-hover table-nowrap" {...getTableProps()}>
-      <thead class="thead-light">
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                {column.render('Header')}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map(row => {
-          prepareRow(row)
-          return (
-            <tr {...row.getRowProps()} onClick={() => window.alert("test")} style={{cursor: "pointer"}}>
-              {row.cells.map(cell => {
-                return (
-                  <td {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </td>
-                )
-              })}
+    <>
+      <SearchBar filter={globalFilter} setFilter={setGlobalFilter} />
+      <table class="table table-hover table-nowrap" {...getTableProps()}>
+        <thead class="thead-light">
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render('Header')}
+                </th>
+              ))}
             </tr>
-          )
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {row.map((row) => {
+            prepareRow(row)
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                })}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </>
   )
 }
 

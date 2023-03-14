@@ -13,6 +13,25 @@ const SearchBar = ({ filter, setFilter }) => {
   );
 }
 
+const PageNav = ({ previousPage, canPreviousPage, nextPage, canNextPage, pageIndex, pageOptions}) => {
+  return (
+    <div className="pagination">
+      <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+        {'<'}
+      </button>{' '}
+      <button onClick={() => nextPage()} disabled={!canNextPage}>
+        {'>'}
+      </button>{' '}
+      <span>
+        Page{' '}
+        <strong>
+          {pageIndex + 1} of {pageOptions.length}
+        </strong>{' '}
+      </span>
+    </div>
+  );
+}
+
 function BorrowerTable() {
   const data = React.useMemo(
     () => [
@@ -73,9 +92,14 @@ function BorrowerTable() {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    row,
+    page,
     prepareRow,
-    state: {globalFilter},
+    pageOptions,
+    nextPage,
+    canNextPage,
+    previousPage,
+    canPreviousPage,
+    state: {pageIndex, pageSize, globalFilter},
     setGlobalFilter
   } = useTable(
     {
@@ -88,11 +112,14 @@ function BorrowerTable() {
             autoResetSortBy: false,
             desc: false
           }
-        ]
+        ],
+        pageSize: 15,
+        pageIndex: 0,
       }
     },
     useGlobalFilter,
-    useSortBy
+    useSortBy,
+    usePagination
   )
 
   return (
@@ -111,7 +138,7 @@ function BorrowerTable() {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {row.map((row) => {
+          {page.map((row, i) => {
             prepareRow(row)
             return (
               <tr {...row.getRowProps()}>
@@ -123,6 +150,7 @@ function BorrowerTable() {
           })}
         </tbody>
       </table>
+      <PageNav previousPage={previousPage} canPreviousPage={canPreviousPage} nextPage={nextPage} canNextPage={canNextPage} pageIndex={pageIndex} pageOptions={pageOptions}/>
     </>
   )
 }

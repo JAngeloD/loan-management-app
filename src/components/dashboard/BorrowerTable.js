@@ -1,3 +1,17 @@
+/*
+  Exports a table showing payment dates and acts like a portal to a more
+  detailed overview of the borrowers in the table.
+
+  - SearchBar: contains jsx for the search bar to filter out data in any column
+  - PageNav: contains jsx to traverse through each page of the table. Default size
+             of each page is 15
+  - BorrowerTable: contains jsx of the table showing payments
+
+  Note:
+    This will not be the only way to view borrower information.
+    Please see the archive component
+*/
+
 import React from 'react'
 import { useTable, useSortBy, useGlobalFilter, usePagination } from 'react-table'
 
@@ -13,7 +27,7 @@ const SearchBar = ({ filter, setFilter }) => {
   );
 }
 
-const PageNav = ({ previousPage, canPreviousPage, nextPage, canNextPage, pageIndex, pageOptions}) => {
+const PageNav = ({ previousPage, canPreviousPage, nextPage, canNextPage, pageIndex, pageOptions }) => {
   return (
     <div className="pagination">
       <button onClick={() => previousPage()} disabled={!canPreviousPage}>
@@ -99,7 +113,7 @@ function BorrowerTable() {
     canNextPage,
     previousPage,
     canPreviousPage,
-    state: {pageIndex, pageSize, globalFilter},
+    state: { pageIndex, pageSize, globalFilter },
     setGlobalFilter
   } = useTable(
     {
@@ -123,35 +137,40 @@ function BorrowerTable() {
   )
 
   return (
-    <>
-      <SearchBar filter={globalFilter} setFilter={setGlobalFilter} />
-      <table class="table table-hover table-nowrap" {...getTableProps()}>
-        <thead class="thead-light">
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                })}
+    <div class="card shadow border-0 mb-7 p-2 mt-5">
+      <div class="card-header bg-dark-subtle">
+        <h5 class="mb-0">Payments</h5>
+      </div>
+      <div class="table-responsive">
+        <SearchBar filter={globalFilter} setFilter={setGlobalFilter} />
+        <table class="table table-hover table-nowrap" {...getTableProps()}>
+          <thead class="thead-light">
+            {headerGroups.map(headerGroup => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map(column => (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render('Header')}
+                  </th>
+                ))}
               </tr>
-            )
-          })}
-        </tbody>
-      </table>
-      <PageNav previousPage={previousPage} canPreviousPage={canPreviousPage} nextPage={nextPage} canNextPage={canNextPage} pageIndex={pageIndex} pageOptions={pageOptions}/>
-    </>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.map((row, i) => {
+              prepareRow(row)
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map(cell => {
+                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  })}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+        <PageNav previousPage={previousPage} canPreviousPage={canPreviousPage} nextPage={nextPage} canNextPage={canNextPage} pageIndex={pageIndex} pageOptions={pageOptions} />
+      </div>
+    </div>
   )
 }
 

@@ -1,32 +1,7 @@
 import React from 'react'
 import BorrowerTable from './BorrowerTable'
 
-
 function Dashboard() {
-  const testdata = {
-    data: [{
-      name: "Ramesh",
-      nextpaymentdate: "Fadatare",
-      paymentval: "$99.00"
-    },
-    {
-      name: "Tom",
-      nextpaymentdate: "Cruise",
-      paymentval: "$99.00"
-    },
-    {
-      name: "Tony",
-      nextpaymentdate: "Stark",
-      paymentval: "$99.00"
-    },
-    {
-      name: "John",
-      nextpaymentdate: "Cena",
-      paymentval: "$99.00"
-    }]
-  }
-
-
   return (
     <>
       <div class="container flex-shrink-1 bg-dark-subtle p-4 ">
@@ -56,7 +31,7 @@ function Dashboard() {
                 <div class="row">
                   <div class="col">
                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">Cash Out</span>
-                    <span class="h3 font-bold mb-0">$4024.25</span>
+                    <span class="h3 font-bold mb-0">$4,024.25</span>
                   </div>
                 </div>
                 <div class="mt-2 mb-0 text-sm">
@@ -75,7 +50,7 @@ function Dashboard() {
                 <div class="row">
                   <div class="col">
                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">Profit</span>
-                    <span class="h3 font-bold mb-0">$4750.90</span>
+                    <span class="h3 font-bold mb-0">$4,750.90</span>
                   </div>
                 </div>
                 <div class="mt-2 mb-0 text-sm">
@@ -93,8 +68,8 @@ function Dashboard() {
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Next Payment</span>
-                    <span class="h3 font-bold mb-0">April 2, 2022</span>
+                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Money on hand</span>
+                    <span class="h3 font-bold mb-0">$20,000.00</span>
                   </div>
                 </div>
                 <div class="mt-2 mb-0 text-sm">
@@ -107,15 +82,7 @@ function Dashboard() {
             </div>
           </div>
         </div>
-
-        <div class="card shadow border-0 mb-7 p-2 mt-5">
-          <div class="card-header bg-dark-subtle">
-            <h5 class="mb-0">Borrowers</h5>
-          </div>
-          <div class="table-responsive">
-            <BorrowerTable></BorrowerTable>
-          </div>
-        </div>
+        <BorrowerTable/>
       </div>
     </>
   )

@@ -22,8 +22,10 @@ function App() {
               case "borrowerform":
                 return <BorrowerForm/>
               case "archive":
+                //Not yet implemented
                 return null
               case "settings":
+                //Not yet implemented
                 return null
               default:
                 return <Dashboard/>

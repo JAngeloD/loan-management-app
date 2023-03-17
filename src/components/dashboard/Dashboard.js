@@ -1,5 +1,8 @@
 import React from 'react'
 import BorrowerTable from './BorrowerTable'
+import '../../dbaccess/DashboardUtils'
+import { getLastCommissionName } from '../../dbaccess/DashboardUtils'
+
 
 function Dashboard() {
   return (
@@ -12,14 +15,14 @@ function Dashboard() {
                 <div class="row">
                   <div class="col">
                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">Commission</span>
-                    <span class="h3 font-bold mb-0">$105.00</span>
+                    <span class="h3 font-bold mb-0">{getTotalCommissionAmount()}</span>
                   </div>
                 </div>
                 <div class="mt-2 mb-0 text-sm">
                   <span class="badge badge-pill bg-success-subtle text-success me-2">
-                    <i class="bi bi-arrow-up me-1"></i>$12.00
+                    <i class="bi bi-arrow-up me-1">{getLastCommissionAmount()}</i>$12.00
                   </span>
-                  <span class="text-nowrap text-xs text-muted">For commissioner Terry</span>
+                  <span class="text-nowrap text-xs text-muted">For {getLastCommissionName()}</span>
                 </div>
               </div>
             </div>
@@ -31,7 +34,7 @@ function Dashboard() {
                 <div class="row">
                   <div class="col">
                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">Cash Out</span>
-                    <span class="h3 font-bold mb-0">$4,024.25</span>
+                    <span class="h3 font-bold mb-0">{getCashOut()}</span>
                   </div>
                 </div>
                 <div class="mt-2 mb-0 text-sm">
@@ -50,7 +53,7 @@ function Dashboard() {
                 <div class="row">
                   <div class="col">
                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">Profit</span>
-                    <span class="h3 font-bold mb-0">$4,750.90</span>
+                    <span class="h3 font-bold mb-0">{getProfit()}</span>
                   </div>
                 </div>
                 <div class="mt-2 mb-0 text-sm">
@@ -69,7 +72,7 @@ function Dashboard() {
                 <div class="row">
                   <div class="col">
                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">Money on hand</span>
-                    <span class="h3 font-bold mb-0">$20,000.00</span>
+                    <span class="h3 font-bold mb-0">{getMoneyOnHand()}</span>
                   </div>
                 </div>
                 <div class="mt-2 mb-0 text-sm">

@@ -8,7 +8,15 @@
 
 const { Pool } = require('pg')
 
-const pool = new Pool()
+// Will make use of env variables, the config block is temporary.
+const pool = new Pool({
+  //DO NOT PULL ACTUAL DATA IN HERE PLEASE
+  user: 'dbuser',
+  host: 'database.server.com',
+  database: 'mydb',
+  password: 'secretpassword',
+  port: 3211,
+})
 
 module.exports = {
   async query(text, params) {

@@ -34,7 +34,7 @@ const PageNav = ({ previousPage, canPreviousPage, nextPage, canNextPage, pageInd
 /********
  * Both parameters must use "useMemo"
  ********/
-export default function FilterTableGeneric({data, columns}) {
+export default function FilterTableGeneric({data, columns, cellClickFunction}) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -94,7 +94,13 @@ export default function FilterTableGeneric({data, columns}) {
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map(cell => {
-                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    return (
+                      <td onClick={() => cellClickFunction()}
+                          style={{cursor: "pointer"}}
+                          {...cell.getCellProps()}>
+                        {cell.render('Cell')}
+                      </td>
+                    )
                   })}
                 </tr>
               )

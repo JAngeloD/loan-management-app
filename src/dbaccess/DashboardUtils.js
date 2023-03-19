@@ -7,6 +7,7 @@
   Note: If you're seeing this, this means this is just a skeleton for now.
 */
 
+import React from 'react'
 const db = require('./Connection')
 
 
@@ -117,3 +118,68 @@ export function getLastPaymentAmount() {
   return 0
 }
 
+/************************************************************************************************
+  PAYMENT/BORROWER TABLE
+*************************************************************************************************/
+
+export function getBorrowerOverViewListData() {
+  const data = React.useMemo(
+    () => [
+      {
+        name: "Filbo",
+        nextpaymentdate: "2022-03-27",
+        paymentval: "$299.00",
+        remainingterm: 12
+      },
+      {
+        name: "Sans",
+        nextpaymentdate: "2022-05-14",
+        paymentval: "$994.00",
+        remainingterm: 3
+      },
+      {
+        name: "Beffica",
+        nextpaymentdate: "2022-03-14",
+        paymentval: "$939.00",
+        remainingterm: 22
+      },
+      {
+        name: "John",
+        nextpaymentdate: "2022-10-21",
+        paymentval: "$979.00",
+        remainingterm: 1
+      }
+    ],
+    []
+  )
+
+  return data
+}
+export function getBorrowerOverViewListColumns() {
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: 'Name',
+        accessor: 'name', // accessor is the "key" in the data
+      },
+      {
+        Header: 'Next Payment Date',
+        accessor: 'nextpaymentdate',
+        sortType: (a, b) => {
+          return new Date(a.values.nextpaymentdate).getTime() - new Date(b.values.nextpaymentdate).getTime()
+        }
+      },
+      {
+        Header: 'Amount expected',
+        accessor: 'paymentval',
+      },
+      {
+        Header: 'Remaining Term',
+        accessor: 'remainingterm',
+      },
+    ],
+    []
+  )
+
+  return columns
+}

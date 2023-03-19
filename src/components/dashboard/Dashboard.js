@@ -18,7 +18,7 @@ function Dashboard() {
           switch (dashboardState) {
             case "viewborrower":
               if (Object.keys(rowdataState) !== 0) {
-                return <BorrowerPageGenerics rowdata={rowdataState}/>
+                return <BorrowerPageGenerics rowdata={rowdataState} setrowdata={setRowdataState} handleDashboardState={handleDashboardState}/>
               }
               else {
                 alert("Error, could not fetch row data, please contact admin")

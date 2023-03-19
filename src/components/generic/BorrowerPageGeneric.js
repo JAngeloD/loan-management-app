@@ -1,13 +1,17 @@
 import React from 'react'
 
 
-export default function BorrowerPageGeneric({rowdata}) {
+export default function BorrowerPageGeneric({rowdata, handleDashboardState, setrowdata}) {
   return(
     <>
       <span>
-        <button onClick={() => alert(JSON.stringify(rowdata))} >
+        <button onClick={() => {handleDashboardState("viewdashboard"); setrowdata("")}}>
           {'<'}
         </button>
+      </span>
+      <hr/>
+      <span>
+        {JSON.stringify(rowdata)}
       </span>
     </>
   )

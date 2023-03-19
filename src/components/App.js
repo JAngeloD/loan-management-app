@@ -11,8 +11,8 @@ function App() {
 
   return (
     <>
-      <div class="container-fluid">
-        <div class="row flex-nowrap">
+      <div className="container-fluid">
+        <div className="row flex-nowrap">
           <Navbar handleState={handleState}/>
 
           {(() => {

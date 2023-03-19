@@ -8,16 +8,20 @@ import FilterTableGeneric from '../generic/FilterTableGeneric'
 import * as db from '../../dbaccess/DashboardUtils'
 
 
-function viewBorrower() {
-  alert("TEST")
-}
+//Changes start to switch to the borrower info page with the row data passed in the params
+export default function BorrowerTable({handleDashboardState}) {
 
-function BorrowerTable() {
+  const viewBorrower = (row) => {
+    //alert(JSON.stringify(row.original))
+    handleDashboardState("viewborrower", row.original)
+  }
+
   return (
     <>
-      <FilterTableGeneric data={db.getBorrowerOverViewListData()} columns={db.getBorrowerOverViewListColumns()} cellClickFunction={viewBorrower}/>
+      <FilterTableGeneric data={db.getBorrowerOverViewListData()}
+                          columns={db.getBorrowerOverViewListColumns()}
+                          cellClickFunction={viewBorrower}/>
     </>
   )
 }
 
-export default BorrowerTable

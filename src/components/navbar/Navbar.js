@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Navbar(props) {
+export default function Navbar(props) {
   return (
     <>
       <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark shadow-lg">
@@ -42,5 +42,3 @@ function Navbar(props) {
     </>
   )
 }
-
-export default Navbar

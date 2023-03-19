@@ -70,14 +70,14 @@ export default function FilterTableGeneric({data, columns, cellClickFunction}) {
   )
 
   return (
-    <div class="card shadow border-0 mb-7 p-2 mt-5">
-      <div class="card-header bg-dark-subtle">
-        <h5 class="mb-0">Payments</h5>
+    <div className="card shadow border-0 mb-7 p-2 mt-5">
+      <div className="card-header bg-dark-subtle">
+        <h5 className="mb-0">Payments</h5>
       </div>
-      <div class="table-responsive">
+      <div className="table-responsive">
         <SearchBar filter={globalFilter} setFilter={setGlobalFilter} />
-        <table class="table table-hover table-nowrap" {...getTableProps()}>
-          <thead class="thead-light">
+        <table className="table table-hover table-nowrap" {...getTableProps()}>
+          <thead className="thead-light">
             {headerGroups.map(headerGroup => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
@@ -95,7 +95,7 @@ export default function FilterTableGeneric({data, columns, cellClickFunction}) {
                 <tr {...row.getRowProps()}>
                   {row.cells.map(cell => {
                     return (
-                      <td onClick={() => cellClickFunction()}
+                      <td onClick={() => cellClickFunction(row)}
                           style={{cursor: "pointer"}}
                           {...cell.getCellProps()}>
                         {cell.render('Cell')}
@@ -111,5 +111,4 @@ export default function FilterTableGeneric({data, columns, cellClickFunction}) {
       </div>
     </div>
   )
-
 }

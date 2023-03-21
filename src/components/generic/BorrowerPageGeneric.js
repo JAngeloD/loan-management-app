@@ -1,87 +1,53 @@
 import React from 'react'
-
+import FilterTableGeneric from '../generic/FilterTableGeneric'
+import * as db from '../../dbaccess/DashboardUtils'
 
 export default function BorrowerPageGeneric({ rowdata, handleDashboardState, setrowdata }) {
   return (
-    <div className="card shadow border-0 mb-7 p-4 mt-5">
-      <span >
+    <div className="card shadow border-0 ps-4 pe-4">
+      <div className="container rounded bg-white mt-5">
         <button className="btn btn-primary p-2" onClick={() => { handleDashboardState("viewdashboard"); setrowdata("") }}>
-          <i class="bi bi-arrow-90deg-left"/> Go Back
+          <i className="bi bi-arrow-90deg-left" /> Go Back
         </button>
-      </span>
-      <div className="p-3 fs-5 fw-semibold">
-        <form className="">
-          <div className="row">
-            <div className="col-md-6">
-              <div className="form-group">
-                <label id="name-label" for="name">Name</label>
-                <input type="text" name="name" id="name" placeholder="Enter borrower's name" className="form-control bg-secondary-subtle mt-1 p-3" required />
+        <div className="row">
+          <div className="col border-right">
+            <div className="p-2 py-5">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h3 className="text-right">Profile Settings</h3>
               </div>
-            </div>
-
-            <div className="col-md-6">
-              <div className="form-group">
-                <label for="startdate">Starting date</label>
-                <input type="date" name="startdate" id="startdate" className="form-control bg-secondary-subtle mt-1 p-3" required />
+              <div className="row mt-2">
+                <div className="col-md-6"><label className="labels">Name</label><input type="text" class="form-control" placeholder={"N/A"} /></div>
+                <div className="col-md-6"><label className="labels">Surname</label><input type="text" className="form-control" placeholder="N/A" value="" /></div>
               </div>
+              <div className="row mt-3">
+                <div className="col-md-12"><label className="labels">Mobile Number</label><input type="text" className="form-control" placeholder="N/A" value="" /></div>
+                <div className="col-md-12"><label className="labels">Address Line 1</label><input type="text" className="form-control" placeholder="N/A" value="" /></div>
+                <div className="col-md-12"><label className="labels">Address Line 2</label><input type="text" className="form-control" placeholder="N/A" value="" /></div>
+                <div className="col-md-12"><label className="labels">Postcode</label><input type="text" className="form-control" placeholder="N/A" value="" /></div>
+                <div className="col-md-12"><label className="labels">State</label><input type="text" className="form-control" placeholder="N/A" value="" /></div>
+                <div className="col-md-12"><label className="labels">Area</label><input type="text" className="form-control" placeholder="N/A" value="" /></div>
+                <div className="col-md-12"><label className="labels">Email ID</label><input type="text" className="form-control" placeholder="N/A" value="" /></div>
+                <div className="col-md-12"><label className="labels">Education</label><input type="text" className="form-control" placeholder="N/A" value="" /></div>
+              </div>
+              <div className="row mt-3">
+                <div className="col-md-6"><label className="labels">Country</label><input type="text" className="form-control" placeholder="N/A" value="" /></div>
+                <div className="col-md-6"><label className="labels">State/Region</label><input type="text" className="form-control" placeholder="N/A" value="" /></div>
+              </div>
+              <div className="mt-5"><button className="btn btn-primary profile-button" type="button">Save Profile</button></div>
             </div>
           </div>
-
-          <div className="row">
-            <div className="col-md-6">
-              <div className="form-group">
-                <label for="loanamount">Loan Amount</label>
-                <input type="number" name="loanamount" id="loanamount" min="1" className="form-control bg-secondary-subtle mt-1 p-3" placeholder="$0.00" />
+          <div className="col">
+            <div className="p-2 py-5">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h3 className="text-right">Payments</h3>
               </div>
-            </div>
-
-            <div className="col-md-6">
-              <div className="form-group">
-                <label for="term">Term</label>
-                <input type="number" name="term" id="term" min="1" className="form-control bg-secondary-subtle mt-1 p-3" placeholder="0" />
-              </div>
+              <FilterTableGeneric data={db.getBorrowerOverViewListData()}
+                columns={db.getBorrowerOverViewListColumns()} />
             </div>
           </div>
-
-          <div className="row">
-            <div className="col-md-6">
-              <div className="form-group">
-                <label>Frequency</label>
-                <select id="dropdown" name="frequency" className="form-control bg-secondary-subtle mt-1 p-3" required>
-                  <option disabled selected value>Select</option>
-                  <option value="monthly">Monthly</option>
-                  <option value="biweekly">Bi-Weekly</option>
-                  <option value="biweekly">Weekly</option>
-                  <option value="onetime">One-time</option>
-                  <option value="balloon">One-time (balloon)</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="col-md-6">
-              <div className="form-group">
-                <label for="interest">Interest</label>
-                <input type="number" name="interest" id="interest" min="1" max="100" className="form-control bg-secondary-subtle mt-1 p-3 " placeholder="#%" />
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-12 mt-2">
-              <div className="form-group">
-                <label>Remarks</label>
-                <textarea id="remark" className="form-control bg-secondary-subtle mt-1 p-3" name="remark" placeholder="Enter any remarks for this borrower..." style={{ height: "200px" }}></textarea>
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-4 mt-4">
-              <button type="submit" id="submit" className="btn btn-primary btn-block">Add</button>
-            </div>
-          </div>
-        </form>
+        </div>
       </div>
-    </div>
+    </div >
   )
 }
+

@@ -6,7 +6,7 @@ import DashboardHeaders from './DashboardHeaders'
 function Dashboard() {
 
   const [dashboardState, setDashboardState] = useState("viewdashboard")
-  const [rowdataState, setRowdataState] = useState("") //Don't call .original already is the JSON object
+  const [rowdataState, setRowdataState] = useState("") //Don't call ".original" already is the JSON object
   const handleDashboardState = (newState, rowdata) => {
     setDashboardState(newState)
     setRowdataState(rowdata)

@@ -1,6 +1,9 @@
 import React from 'react'
 import FilterTableGeneric from '../generic/FilterTableGeneric'
-import * as db from '../../dbaccess/DashboardUtils'
+import * as db from '../../dbaccess/BorrowerPageUtils'
+
+
+
 
 export default function BorrowerPageGeneric({ rowdata, handleDashboardState, setrowdata }) {
   return (
@@ -58,8 +61,8 @@ export default function BorrowerPageGeneric({ rowdata, handleDashboardState, set
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h3 className="text-right">Payments</h3>
               </div>
-              <FilterTableGeneric data={db.getBorrowerOverViewListData()}
-                columns={db.getBorrowerOverViewListColumns()} />
+              <FilterTableGeneric data={db.getBorrowerPaymentsData()}
+                                  columns={db.getBorrowerPaymentsColumns()} />
             </div>
           </div>
         </div>

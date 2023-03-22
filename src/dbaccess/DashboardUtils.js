@@ -1,8 +1,9 @@
 /*
-  Contains code to fetch data from the PostgreSQL for the Dashboard Component
+  Contains code to fetch data from the PostgreSQL for Dashboard Components
   Split into two sections:
     - Payment/Borrower table
     - Headers
+    - (THIS FILE DOESN'T CONTAIN FUNCTIONS FOR THE BORROWER PAGE, PLEASE LOOK AT BorrowerPage.js)
 
   Note: If you're seeing this, this means this is just a skeleton for now.
 */

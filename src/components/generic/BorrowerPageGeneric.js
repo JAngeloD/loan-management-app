@@ -1,5 +1,5 @@
 import React from 'react'
-import FilterTableGeneric from '../generic/FilterTableGeneric'
+import FilterTableGeneric from '../generic/table/FilterTableGeneric'
 import * as db from '../../dbaccess/BorrowerPageUtils'
 
 

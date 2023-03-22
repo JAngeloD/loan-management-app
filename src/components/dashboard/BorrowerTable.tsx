@@ -4,7 +4,7 @@
 */
 
 import React from 'react'
-import {FilterTableGeneric} from '../generic/FilterTableGeneric'
+import {FilterTableGeneric} from '../generic/table/FilterTableGeneric'
 import * as db from '../../dbaccess/DashboardUtils'
 
 interface Props {
@@ -22,7 +22,8 @@ export default function BorrowerTable({handleDashboardState}: Props) {
   return (
     <>
       <FilterTableGeneric data={db.getBorrowerOverViewListData()}
-                          columns={db.getBorrowerOverViewListColumns()}/>
+                          columns={db.getBorrowerOverViewListColumns()}
+                          showGlobalFilter/>
     </>
   )
 }

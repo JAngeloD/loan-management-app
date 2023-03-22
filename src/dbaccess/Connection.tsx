@@ -19,7 +19,7 @@ const pool = new Pool({
 })
 
 module.exports = {
-  async query(text, params) {
+  async query(text: string, params: any) {
     const start = Date.now()
     const res = await pool.query(text, params)
     const duration = Date.now() - start
@@ -37,7 +37,7 @@ module.exports = {
       console.error(`The last executed query on this client was: ${client.lastQuery}`)
     }, 5000)
 
-    client.query = (...args) => {
+    client.query = (...args: [any]) => {
       client.lastQuery = args
       return query.apply(client, args)
     }

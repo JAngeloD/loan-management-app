@@ -7,26 +7,34 @@
 import React from 'react'
 const db = require('./Connection')
 
+interface Payments {
+  values: {
+    paymentdate: string;
+    paymentval: string;
+    paymentstatus: number;
+  }
+}
+
 export function getBorrowerPaymentsData() {
   const data = React.useMemo(
     () => [
       {
-        nextpaymentdate: "2022-03-15",
+        paymentdate: "2022-03-15",
         paymentval: "$250.00",
         paymentstatus: "paid"
       },
       {
-        nextpaymentdate: "2022-04-15",
+        paymentdate: "2022-04-15",
         paymentval: "$250.00",
         paymentstatus: "not paid"
       },
       {
-        nextpaymentdate: "2022-05-15",
+        paymentdate: "2022-05-15",
         paymentval: "$250.00",
         paymentstatus: "not paid"
       },
       {
-        nextpaymentdate: "2022-06-15",
+        paymentdate: "2022-06-15",
         paymentval: "$250.00",
         paymentstatus: "not paid"
       }
@@ -41,9 +49,9 @@ export function getBorrowerPaymentsColumns() {
     () => [
       {
         Header: 'Payment Date',
-        accessor: 'nextpaymentdate',
-        sortType: (a, b) => {
-          return new Date(a.values.nextpaymentdate).getTime() - new Date(b.values.nextpaymentdate).getTime()
+        accessor: 'paymentdate',
+        sortType: (a: Payments, b: Payments) => {
+          return new Date(a.values.paymentdate).getTime() - new Date(b.values.paymentdate).getTime()
         }
       },
       {

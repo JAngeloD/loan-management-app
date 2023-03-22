@@ -123,6 +123,15 @@ export function getLastPaymentAmount() {
   PAYMENT/BORROWER TABLE
 *************************************************************************************************/
 
+interface BorrowerOverview {
+  values: {
+    name: string;
+    nextpaymentdate: string;
+    paymentval: string;
+    remainingterm: number;
+  }
+}
+
 export function getBorrowerOverViewListData() {
   const data = React.useMemo(
     () => [
@@ -166,7 +175,7 @@ export function getBorrowerOverViewListColumns() {
       {
         Header: 'Next Payment Date',
         accessor: 'nextpaymentdate',
-        sortType: (a, b) => {
+        sortType: (a: BorrowerOverview, b: BorrowerOverview) => {
           return new Date(a.values.nextpaymentdate).getTime() - new Date(b.values.nextpaymentdate).getTime()
         }
       },

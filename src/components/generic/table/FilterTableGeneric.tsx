@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import DebouncedInput from './DebouncedInput'
-import { getCoreRowModel, useReactTable, flexRender, getPaginationRowModel, FilterFn, getFilteredRowModel } from '@tanstack/react-table';
+import { getCoreRowModel, useReactTable, flexRender, getPaginationRowModel, FilterFn, getFilteredRowModel, getSortedRowModel, SortingState } from '@tanstack/react-table';
 import type { ColumnDef } from '@tanstack/react-table';
 import { filterFns } from './FuzzyFilter'
 
@@ -28,13 +28,23 @@ export const FilterTableGeneric = <T extends object>({
 }: ReactTableProps<T>) => {
 
   const [globalFilter, setGlobalFilter] = useState('');
+  const [sorting, setSorting] = React.useState<SortingState>([
+    {
+      id: "nextpaymentdate",
+      desc: false
+    }
+  ])
+
   const table = useReactTable({
     data,
     columns,
     state: {
+      sorting,
       globalFilter
     },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onGlobalFilterChange: setGlobalFilter,
@@ -45,6 +55,7 @@ export const FilterTableGeneric = <T extends object>({
     <div className="flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-4 sm:px-6 lg:px-8">
+          <button onClick={() => { console.log(sorting) }} >Sort State</button>
           <div className="overflow-hidden p-2">
             {showGlobalFilter ? (
               <DebouncedInput
@@ -60,8 +71,27 @@ export const FilterTableGeneric = <T extends object>({
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map(header => {
                       return (
-                        <>
-                        </>
+                        <th key={header.id} colSpan={header.colSpan}>
+                          {header.isPlaceholder ? null : (
+                            <div
+                              {...{
+                                className: header.column.getCanSort()
+                                  ? 'cursor-pointer select-none'
+                                  : '',
+                                onClick: header.column.getToggleSortingHandler(),
+                              }}
+                            >
+                              {flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                              {{
+                                asc: ' 🔼',
+                                desc: ' 🔽',
+                              }[header.column.getIsSorted() as string] ?? null}
+                            </div>
+                          )}
+                        </th>
                       )
                     })}
                   </tr>

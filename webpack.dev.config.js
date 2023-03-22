@@ -14,6 +14,11 @@ module.exports = {
         use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'postcss-loader' }, { loader: 'sass-loader'}]
       },
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.jsx?$/,
         use: [{ loader: 'babel-loader' }],
         include: defaultInclude
@@ -29,6 +34,9 @@ module.exports = {
         include: defaultInclude
       }
     ]
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
   target: 'electron-renderer',
   plugins: [

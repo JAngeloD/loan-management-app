@@ -1,120 +1,57 @@
 import React from 'react'
-import { useTable, useSortBy, useGlobalFilter, usePagination, Column} from 'react-table'
+import { getCoreRowModel, useReactTable, flexRender } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 
-interface ReactTableProps {
-  data: [];
-  columns: Column[];
-  cellClickFunction(...args: [any]): any;
+interface ReactTableProps<T extends object> {
+  data: T[];
+  columns: ColumnDef<T>[];
  }
-
-const SearchBar = ({ filter, setFilter }) => {
-  return (
-    <span className='filter'>
-      <input value={filter || ''}
-        onChange={e => setFilter(e.target.value)}
-        placeholder='Search...'
-      />
-    </span>
-  );
-}
-
-const PageNav = ({ previousPage, canPreviousPage, nextPage, canNextPage, pageIndex, pageOptions }) => {
-  return (
-    <div className="pagination">
-      <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-        {'<'}
-      </button>{' '}
-      <button onClick={() => nextPage()} disabled={!canNextPage}>
-        {'>'}
-      </button>{' '}
-      <span>
-        Page{' '}
-        <strong>
-          {pageIndex + 1} of {pageOptions.length}
-        </strong>{' '}
-      </span>
-    </div>
-  );
-}
 
 /********
  * Both parameters must use "useMemo"
  ********/
-export default function FilterTableGeneric({data, columns, cellClickFunction}: ReactTableProps) {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow,
-    pageOptions,
-    nextPage,
-    canNextPage,
-    previousPage,
-    canPreviousPage,
-    state: { pageIndex, pageSize, globalFilter },
-    setGlobalFilter
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: {
-        sortBy: [
-          {
-            id: 'nextpaymentdate',
-            autoResetSortBy: false,
-            desc: false
-          }
-        ],
-        pageSize: 15,
-        pageIndex: 0,
-      }
-    },
-    useGlobalFilter,
-    useSortBy,
-    usePagination
-  )
+export const FilterTableGeneric = <T extends object>({ data, columns }: ReactTableProps<T>) => {
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   return (
-    <div className="card shadow border-0 mb-7 p-2 mt-5">
-      <div className="card-header bg-dark-subtle">
-        <h5 className="mb-0">Payments</h5>
-      </div>
-      <div className="table-responsive">
-        <SearchBar filter={globalFilter} setFilter={setGlobalFilter} />
-        <table className="table table-hover table-nowrap" {...getTableProps()}>
-          <thead className="thead-light">
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                    {column.render('Header')}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
-              prepareRow(row)
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map(cell => {
-                    return (
-                      <td onClick={() => cellClickFunction(row)}
-                          style={{cursor: "pointer"}}
-                          {...cell.getCellProps()}>
-                        {cell.render('Cell')}
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-        <PageNav previousPage={previousPage} canPreviousPage={canPreviousPage} nextPage={nextPage} canNextPage={canNextPage} pageIndex={pageIndex} pageOptions={pageOptions} />
-      </div>
-    </div>
+    <div className="flex flex-col">
+     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+       <div className="inline-block min-w-full py-4 sm:px-6 lg:px-8">
+         <div className="overflow-hidden p-2">
+           <table className="min-w-full text-center">
+             <thead className="border-b bg-gray-50">
+               {table.getHeaderGroups().map((headerGroup) => (
+                 <tr key={headerGroup.id}>
+                   {headerGroup.headers.map((header) => (
+                     <th key={header.id} className="px-6 py-4 text-sm font-medium text-gray-900">
+                       {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                     </th>
+                   ))}
+                 </tr>
+               ))}
+             </thead>
+             <tbody>
+               {table.getRowModel().rows.map((row) => (
+                 <tr key={row.id} className='border-b" bg-white'>
+                   {row.getVisibleCells().map((cell) => (
+                     <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900" key={cell.id}>
+                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                     </td>
+                   ))}
+                 </tr>
+               ))}
+             </tbody>
+           </table>
+         </div>
+       </div>
+     </div>
+   </div>
   )
 }
+
+export default FilterTableGeneric

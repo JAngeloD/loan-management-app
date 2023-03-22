@@ -9,6 +9,7 @@
 */
 
 import React from 'react'
+import { ColumnDef } from '@tanstack/react-table';
 const db = require('./Connection')
 
 
@@ -124,12 +125,10 @@ export function getLastPaymentAmount() {
 *************************************************************************************************/
 
 interface BorrowerOverview {
-  values: {
-    name: string;
-    nextpaymentdate: string;
-    paymentval: string;
-    remainingterm: number;
-  }
+  name: string;
+  nextpaymentdate: string;
+  paymentval: string;
+  remainingterm: number;
 }
 
 export function getBorrowerOverViewListData() {
@@ -165,27 +164,32 @@ export function getBorrowerOverViewListData() {
 
   return data
 }
+
 export function getBorrowerOverViewListColumns() {
-  const columns = React.useMemo(
+  const columns = React.useMemo<ColumnDef<BorrowerOverview>[]>(
     () => [
       {
-        Header: 'Name',
-        accessor: 'name', // accessor is the "key" in the data
+        header: 'Name',
+        cell: (row) => row.renderValue(),
+        accessorKey: 'name', // accessor is the "key" in the data
       },
       {
-        Header: 'Next Payment Date',
-        accessor: 'nextpaymentdate',
+        header: 'Next Payment Date',
         sortType: (a: BorrowerOverview, b: BorrowerOverview) => {
-          return new Date(a.values.nextpaymentdate).getTime() - new Date(b.values.nextpaymentdate).getTime()
-        }
+          return new Date(a.nextpaymentdate).getTime() - new Date(b.nextpaymentdate).getTime()
+        },
+        cell: (row) => row.renderValue(),
+        accessorKey: 'nextpaymentdate',
       },
       {
-        Header: 'Amount expected',
-        accessor: 'paymentval',
+        header: 'Amount expected',
+        cell: (row) => row.renderValue(),
+        accessorKey: 'paymentval',
       },
       {
-        Header: 'Remaining Term',
-        accessor: 'remainingterm',
+        header: 'Remaining Term',
+        cell: (row) => row.renderValue(),
+        accessorKey: 'remainingterm',
       },
     ],
     []

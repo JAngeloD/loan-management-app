@@ -1,6 +1,10 @@
 import React from 'react'
 
-export default function Navbar(props) {
+interface Props {
+  handleState: (params: string) => any;
+}
+
+export default function Navbar({handleState}: Props) {
   return (
     <>
       <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark shadow-lg">
@@ -10,19 +14,19 @@ export default function Navbar(props) {
           </a>
           <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
 
-            <li onClick={() => props.handleState("dashboard")}>
+            <li onClick={() => handleState("dashboard")}>
               <a href="#" className="nav-link align-middle px-0">
                 <i className="fs-4 bi-house"></i> <span className="ms-1 d-none d-sm-inline ">Dashboard</span>
               </a>
             </li>
 
-            <li onClick={() => props.handleState("borrowerform")}>
+            <li onClick={() => handleState("borrowerform")}>
               <a href="#" className="nav-link px-0 align-middle">
                 <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Add Borrower</span>
               </a>
             </li>
 
-            <li onClick={() => props.handleState("archive")}>
+            <li onClick={() => handleState("archive")}>
               <a href="#" className="nav-link px-0 align-middle">
                 <i className="fs-4 bi-book"></i> <span className="ms-1 d-none d-sm-inline">Archive</span>
               </a>
@@ -30,7 +34,7 @@ export default function Navbar(props) {
 
             <hr className="hr" style={{ width: "100%" }} />
 
-            <li onClick={() => props.handleState("settings")}>
+            <li onClick={() => handleState("settings")}>
               <a href="#" className="nav-link px-0 align-middle">
                 <i className="fs-4 bi bi-gear"></i> <span className="ms-1 d-none d-sm-inline">Settings</span>
               </a>

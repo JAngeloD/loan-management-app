@@ -1,6 +1,6 @@
 import React from 'react'
 
-function BorrowerForm() {
+export default function BorrowerForm() {
   return (
     <>
       <div className="container flex-shrink-1 bg-dark-subtle p-4 ">
@@ -13,14 +13,14 @@ function BorrowerForm() {
               <div className="row">
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label id="name-label" for="name">Name</label>
+                    <label id="name-label" htmlFor="name">Name</label>
                     <input type="text" name="name" id="name" placeholder="Enter borrower's name" className="form-control bg-secondary-subtle mt-1 p-3" required />
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label for="startdate">Starting date</label>
+                    <label htmlFor="startdate">Starting date</label>
                     <input type="date" name="startdate" id="startdate" className="form-control bg-secondary-subtle mt-1 p-3"  required />
                   </div>
                 </div>
@@ -29,14 +29,14 @@ function BorrowerForm() {
               <div className="row">
               <div className="col-md-6">
                   <div className="form-group">
-                    <label for="loanamount">Loan Amount</label>
+                    <label htmlFor="loanamount">Loan Amount</label>
                     <input type="number" name="loanamount" id="loanamount" min="1" className="form-control bg-secondary-subtle mt-1 p-3" placeholder="$0.00" />
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label for="term">Term</label>
+                    <label htmlFor="term">Term</label>
                     <input type="number" name="term" id="term" min="1" className="form-control bg-secondary-subtle mt-1 p-3" placeholder="0"/>
                   </div>
                 </div>
@@ -47,7 +47,7 @@ function BorrowerForm() {
                   <div className="form-group">
                     <label>Frequency</label>
                     <select id="dropdown" name="frequency" className="form-control bg-secondary-subtle mt-1 p-3" required>
-                      <option disabled selected value>Select</option>
+                      <option disabled selected>Select</option>
                       <option value="monthly">Monthly</option>
                       <option value="biweekly">Bi-Weekly</option>
                       <option value="biweekly">Weekly</option>
@@ -59,7 +59,7 @@ function BorrowerForm() {
 
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label for="interest">Interest</label>
+                    <label htmlFor="interest">Interest</label>
                     <input type="number" name="interest" id="interest" min="1" max="100" className="form-control bg-secondary-subtle mt-1 p-3 "  placeholder="#%" />
                   </div>
                 </div>
@@ -86,5 +86,3 @@ function BorrowerForm() {
     </>
   )
 }
-
-export default BorrowerForm

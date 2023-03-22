@@ -40,6 +40,9 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
   target: 'electron-renderer',
   plugins: [
     new HtmlWebpackPlugin(),

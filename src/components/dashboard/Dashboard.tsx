@@ -3,11 +3,12 @@ import BorrowerTable from './BorrowerTable'
 import BorrowerPageGenerics from '../generic/BorrowerPageGeneric'
 import DashboardHeaders from './DashboardHeaders'
 
-function Dashboard() {
+
+export default function Dashboard() {
 
   const [dashboardState, setDashboardState] = useState("viewdashboard")
-  const [rowdataState, setRowdataState] = useState("") //Don't call ".original" already is the JSON object
-  const handleDashboardState = (newState, rowdata) => {
+  const [rowdataState, setRowdataState] = useState(null) //Don't call ".original" already is the JSON object
+  const handleDashboardState = (newState: string, rowdata: object) => {
     setDashboardState(newState)
     setRowdataState(rowdata)
   }
@@ -17,7 +18,7 @@ function Dashboard() {
       {(() => {
           switch (dashboardState) {
             case "viewborrower":
-              if (Object.keys(rowdataState) !== 0) {
+              if (rowdataState !== null) {
                 return <BorrowerPageGenerics rowdata={rowdataState} setrowdata={setRowdataState} handleDashboardState={handleDashboardState}/>
               }
               else {
@@ -36,5 +37,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard
 

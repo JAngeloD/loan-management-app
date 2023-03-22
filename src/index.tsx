@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'react-dom'
+import * as ReactDOM from 'react-dom';
 import App from './components/App'
 
 import './scss/custom.scss' // Imports bootstrap
@@ -12,4 +12,4 @@ root.id = 'root'
 document.body.appendChild(root)
 
 // Now we can render our application into it
-render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('root'))

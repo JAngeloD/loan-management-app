@@ -7,7 +7,9 @@ function App() {
 
   //State of the main screen, dashboard is the default
   const [mainState, setMainState] = useState("dashboard")
-  const handleState = (newState) => {setMainState(newState)}
+
+  //const handleState = (newState) => {setMainState(newState)} example
+  const handleState = (newState: string) => {setMainState(newState); console.log(mainState)}
 
   return (
     <>
@@ -18,7 +20,7 @@ function App() {
           {(() => {
             switch (mainState) {
               case "dashboard":
-                return <Dashboard handleState={handleState}/>
+                return <Dashboard/>
               case "borrowerform":
                 return <BorrowerForm/>
               case "archive":

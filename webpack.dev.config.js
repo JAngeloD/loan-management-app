@@ -51,7 +51,7 @@ module.exports = {
     chunks: false,
     children: false
   },
-  devtool: 'cheap-source-map',
+  devtool: 'inline-source-map',
   devServer: {
     static: {
       directory: path.resolve(__dirname, 'dist')

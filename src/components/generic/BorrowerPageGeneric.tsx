@@ -1,15 +1,17 @@
 import React from 'react'
-import FilterTableGeneric from '../generic/table/FilterTableGeneric'
+import FilterTableGeneric from './table/FilterTableGeneric'
 import * as db from '../../dbaccess/BorrowerPageUtils'
 
+interface ReactTableProps {
+  rowdata: object;
+  handleDashboardState: (newState: string, rowdata: object) => any
+}
 
-
-
-export default function BorrowerPageGeneric({ rowdata, handleDashboardState, setrowdata }) {
+export default function BorrowerPageGeneric({ rowdata, handleDashboardState}: ReactTableProps) {
   return (
     <div className="card shadow border-0 ps-4 pe-4">
       <div className="rounded bg-white mt-5">
-        <button className="btn btn-primary p-2" onClick={() => { handleDashboardState("viewdashboard"); setrowdata("") }}>
+        <button className="btn btn-primary p-2" onClick={() => { handleDashboardState("viewdashboard", null)}}>
           <i className="bi bi-arrow-90deg-left" /> Go Back
         </button>
         <div className="row">
@@ -19,7 +21,7 @@ export default function BorrowerPageGeneric({ rowdata, handleDashboardState, set
                 <h3 className="text-right">Personal Info</h3>
               </div>
               <div className="row mt-2">
-                <div className="col-md-6"><label className="labels">First Name</label><input type="text" class="form-control" placeholder={"N/A"} /></div>
+                <div className="col-md-6"><label className="labels">First Name</label><input type="text" className="form-control" placeholder={"N/A"} /></div>
                 <div className="col-md-6"><label className="labels">Last Name </label><input type="text" className="form-control" placeholder="N/A" /></div>
               </div>
               <div className="row mt-2">
@@ -62,7 +64,7 @@ export default function BorrowerPageGeneric({ rowdata, handleDashboardState, set
                 <h3 className="text-right">Payments</h3>
               </div>
               <FilterTableGeneric data={db.getBorrowerPaymentsData()}
-                columns={db.getBorrowerPaymentsColumns()} />
+                                  columns={db.getBorrowerPaymentsColumns()} />
             </div>
           </div>
         </div>

@@ -26,7 +26,7 @@ export function getTotalCommissionAmount() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return 0
+  return "$5.00"
 }
 
 export function getLastCommissionAmount() {
@@ -35,7 +35,7 @@ export function getLastCommissionAmount() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return 0
+  return "$5.00"
 }
 
 export function getLastCommissionName() {
@@ -43,7 +43,7 @@ export function getLastCommissionName() {
   //RETURN TYPE: String
   //EXAMPLE: John Doe
 
-  return ""
+  return "John Doe"
 }
 
 ////////////////
@@ -54,14 +54,14 @@ export function getCashOut() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return 0
+  return "$5.00"
 }
 export function getPaymentsLeft() {
   //Return the total term left for all borrowers
   //RETURN TYPE: Integer
   //EXAMPLE: 25
 
-  return 0
+  return 25
 }
 
 ////////////////
@@ -73,7 +73,7 @@ export function getProfit() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return 0
+  return "$5.00"
 }
 
 export function getLastInterestAmount() {
@@ -81,7 +81,7 @@ export function getLastInterestAmount() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return 0
+  return "$5.00"
 }
 
 export function getLastPaymentDate() {
@@ -89,7 +89,7 @@ export function getLastPaymentDate() {
   //RETURN TYPE: Date (YYYY,MM,DD)
   //EXAMPLE: 2023/03/18
 
-  return new Date().toDateString
+  return new Date("2023/03/18").toDateString
 }
 
 export function getLastPaymentBorrower() {
@@ -97,7 +97,7 @@ export function getLastPaymentBorrower() {
   //RETURN TYPE: String
   //EXAMPLE: John Doe
 
-  return ""
+  return "John Doe"
 }
 
 ////////////////
@@ -109,7 +109,7 @@ export function getMoneyOnHand() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return 0
+  return "$5.00"
 }
 export function getLastPaymentAmount() {
   //Return the last payment amount gained from the most recent payment
@@ -117,7 +117,7 @@ export function getLastPaymentAmount() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return 0
+  return "$5.00"
 }
 
 /************************************************************************************************
@@ -148,7 +148,7 @@ export function getBorrowerOverViewListData() {
       },
       {
         name: "Beffica",
-        nextpaymentdate: "2022-03-14",
+        nextpaymentdate: "2023-03-14",
         paymentval: "$939.00",
         remainingterm: 22
       },

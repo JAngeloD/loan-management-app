@@ -4,6 +4,7 @@ import BorrowerPageGenerics from '../generic/BorrowerPageGeneric'
 import DashboardHeaders from './DashboardHeaders'
 
 
+
 export default function Dashboard() {
 
   const [dashboardState, setDashboardState] = useState("viewdashboard")
@@ -19,7 +20,7 @@ export default function Dashboard() {
           switch (dashboardState) {
             case "viewborrower":
               if (rowdataState !== null) {
-                return <BorrowerPageGenerics rowdata={rowdataState} setrowdata={setRowdataState} handleDashboardState={handleDashboardState}/>
+                return <BorrowerPageGenerics rowdata={rowdataState} handleDashboardState={handleDashboardState} />
               }
               else {
                 alert("Error, could not fetch row data, please contact admin")

@@ -4,15 +4,14 @@
   Note: If you're seeing this, this means this is just a skeleton for now.
 */
 
+import { ColumnDef } from '@tanstack/react-table';
 import React from 'react'
 const db = require('./Connection')
 
 interface Payments {
-  values: {
-    paymentdate: string;
-    paymentval: string;
-    paymentstatus: number;
-  }
+  paymentdate: string;
+  paymentval: string;
+  paymentstatus: string;
 }
 
 export function getBorrowerPaymentsData() {
@@ -45,22 +44,25 @@ export function getBorrowerPaymentsData() {
   return data
 }
 export function getBorrowerPaymentsColumns() {
-  const columns = React.useMemo(
+  const columns = React.useMemo<ColumnDef<Payments>[]>(
     () => [
       {
-        Header: 'Payment Date',
-        accessor: 'paymentdate',
+        header: 'Payment Date',
+        cell: (row) => row.renderValue(),
+        accessorKey: 'paymentdate',
         sortType: (a: Payments, b: Payments) => {
-          return new Date(a.values.paymentdate).getTime() - new Date(b.values.paymentdate).getTime()
+          return new Date(a.paymentdate).getTime() - new Date(b.paymentdate).getTime()
         }
       },
       {
-        Header: 'Payment Amount',
-        accessor: 'paymentval',
+        header: 'Payment Amount',
+        cell: (row) => row.renderValue(),
+        accessorKey: 'paymentval',
       },
       {
-        Header: 'Status',
-        accessor: 'paymentstatus',
+        header: 'Status',
+        cell: (row) => row.renderValue(),
+        accessorKey: 'paymentstatus',
       },
     ],
     []

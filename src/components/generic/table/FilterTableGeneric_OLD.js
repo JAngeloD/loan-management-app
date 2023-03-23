@@ -1,11 +1,6 @@
 import React from 'react'
 import { useTable, useSortBy, useGlobalFilter, usePagination, Column} from 'react-table'
 
-interface ReactTableProps {
-  data: [];
-  columns: Column[];
-  cellClickFunction(...args: [any]): any;
- }
 
 const SearchBar = ({ filter, setFilter }) => {
   return (
@@ -40,7 +35,7 @@ const PageNav = ({ previousPage, canPreviousPage, nextPage, canNextPage, pageInd
 /********
  * Both parameters must use "useMemo"
  ********/
-export default function FilterTableGeneric({data, columns, cellClickFunction}: ReactTableProps) {
+export default function FilterTableGeneric({data, columns, cellClickFunction}) {
   const {
     getTableProps,
     getTableBodyProps,

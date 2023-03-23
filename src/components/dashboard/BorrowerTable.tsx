@@ -15,7 +15,7 @@ interface Props {
 export default function BorrowerTable({handleDashboardState}: Props) {
 
   const viewBorrower = (row: any) => {
-    //alert(JSON.stringify(row.original))
+    //console.log(JSON.stringify(row.original))
     handleDashboardState("viewborrower", row.original)
   }
 
@@ -23,7 +23,9 @@ export default function BorrowerTable({handleDashboardState}: Props) {
     <>
       <FilterTableGeneric data={db.getBorrowerOverViewListData()}
                           columns={db.getBorrowerOverViewListColumns()}
-                          showGlobalFilter/>
+                          cellClickFunction={viewBorrower}
+                          showGlobalFilter
+                          />
     </>
   )
 }

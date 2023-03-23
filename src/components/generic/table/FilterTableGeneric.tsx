@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import DebouncedInput from './DebouncedInput'
-import { getCoreRowModel, useReactTable, flexRender, getPaginationRowModel, FilterFn, getFilteredRowModel, getSortedRowModel, SortingState } from '@tanstack/react-table';
+import PaginationInputs from './PaginationInputs'
+import { getCoreRowModel, useReactTable, flexRender, getPaginationRowModel, FilterFn, getFilteredRowModel, getSortedRowModel, SortingState, Pagination } from '@tanstack/react-table';
 import type { ColumnDef } from '@tanstack/react-table';
 import { filterFns } from './FuzzyFilter'
 
@@ -8,6 +9,7 @@ import { filterFns } from './FuzzyFilter'
 interface ReactTableProps<T extends object> {
   data: T[];
   columns: ColumnDef<T>[];
+  cellClickFunction?: (args: any) => any;
   showNavigation?: boolean;
   showGlobalFilter?: boolean;
   filterFn?: FilterFn<T>;
@@ -25,6 +27,7 @@ export const FilterTableGeneric = <T extends object>({
   showNavigation = true,
   showGlobalFilter = false,
   filterFn = filterFns.fuzzy,
+  cellClickFunction = () => void 0,
 }: ReactTableProps<T>) => {
 
   const [globalFilter, setGlobalFilter] = useState('');
@@ -55,7 +58,6 @@ export const FilterTableGeneric = <T extends object>({
     <div className="flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-4 sm:px-6 lg:px-8">
-          <button onClick={() => { console.log(sorting) }} >Sort State</button>
           <div className="overflow-hidden p-2">
             {showGlobalFilter ? (
               <DebouncedInput
@@ -99,9 +101,10 @@ export const FilterTableGeneric = <T extends object>({
               </thead>
               <tbody>
                 {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} className='border-b" bg-white'>
+                  <tr key={row.id} className='border-b" bg-white'
+                      onClick={() => {cellClickFunction(row)}}>
                     {row.getVisibleCells().map((cell) => (
-                      <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900" key={cell.id}>
+                      <td  className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900" key={cell.id}>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>
                     ))}
@@ -110,81 +113,11 @@ export const FilterTableGeneric = <T extends object>({
               </tbody>
             </table>
           </div>
-          <div className="flex flex-col">
-            <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="inline-block min-w-full py-4 sm:px-6 lg:px-8">
-                <div className="overflow-hidden p-2">
-                  {/* ... */}
-                  {showNavigation ? (
-                    <>
-                      <div className="h-2 mt-5" />
-                      <div className="flex items-center gap-2">
-                        <button
-                          className="cursor-pointer rounded border p-1"
-                          onClick={() => table.setPageIndex(0)}
-                          disabled={!table.getCanPreviousPage()}
-                        >
-                          {'<<'}
-                        </button>
-                        <button
-                          className="cursor-pointer rounded border p-1"
-                          onClick={() => table.previousPage()}
-                          disabled={!table.getCanPreviousPage()}
-                        >
-                          {'<'}
-                        </button>
-                        <button
-                          className="cursor-pointer rounded border p-1"
-                          onClick={() => table.nextPage()}
-                          disabled={!table.getCanNextPage()}
-                        >
-                          {'>'}
-                        </button>
-                        <button
-                          className="cursor-pointer rounded border p-1"
-                          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                          disabled={!table.getCanNextPage()}
-                        >
-                          {'>>'}
-                        </button>
-                        <span className="flex cursor-pointer items-center gap-1">
-                          <div>Page</div>
-                          <strong>
-                            {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-                          </strong>
-                        </span>
-                        <span className="flex items-center gap-1">
-                          | Go to page:
-                          <input
-                            type="number"
-                            defaultValue={table.getState().pagination.pageIndex + 1}
-                            onChange={(e) => {
-                              const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                              table.setPageIndex(page);
-                            }}
-                            className="w-16 rounded border p-1"
-                          />
-                        </span>
-                        <select
-                          value={table.getState().pagination.pageSize}
-                          onChange={(e) => {
-                            table.setPageSize(Number(e.target.value));
-                          }}
-                        >
-                          {[10, 20, 30, 40, 50].map((pageSize) => (
-                            <option key={pageSize} value={pageSize}>
-                              Show {pageSize}
-                            </option>
-                          ))}
-                        </select>
-                        <div className="h-4" />
-                      </div>
-                    </>
-                  ) : null}
-                </div>
-              </div>
-            </div>
-          </div>
+          {showNavigation ?
+            <>
+              <PaginationInputs parentTable={table} />
+            </>
+            : null}
         </div>
       </div>
     </div>

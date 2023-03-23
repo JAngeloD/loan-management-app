@@ -8,14 +8,34 @@ import { ColumnDef } from '@tanstack/react-table';
 import React from 'react'
 const db = require('./Connection')
 
-interface Payments {
+export interface borrowerPersonalInfo {
+  firstname: string;
+  lastname: string;
+  address: string;
+  province: string;
+  postalcode: string;
+  phonenumber: string;
+  email: string;
+}
+export interface borrowerLoanInfo {
+  principal: string;
+  interest: string;
+  term: string;
+  paymentperperiod: string;
+  startdate: string;
+  frequency: string;
+  commissioner: string;
+  commissioninterest: string;
+}
+
+export interface Payments {
   paymentdate: string;
   paymentval: string;
   paymentstatus: string;
 }
 
 export function getBorrowerPaymentsData() {
-  const data = React.useMemo(
+  return React.useMemo(
     () => [
       {
         paymentdate: "2022-03-15",
@@ -40,11 +60,9 @@ export function getBorrowerPaymentsData() {
     ],
     []
   )
-
-  return data
 }
 export function getBorrowerPaymentsColumns() {
-  const columns = React.useMemo<ColumnDef<Payments>[]>(
+  return React.useMemo<ColumnDef<Payments>[]>(
     () => [
       {
         header: 'Payment Date',
@@ -67,6 +85,31 @@ export function getBorrowerPaymentsColumns() {
     ],
     []
   )
+}
 
-  return columns
+export function getBorrowerPersonalInfo(rowdata: object): borrowerPersonalInfo{
+  // ... Pass rowdata to db to retrieve borrower info
+  return ({
+    firstname: "Filbo",
+    lastname: "Fiddlepie",
+    address: "snaktooth island",
+    province: "what",
+    postalcode: "123 456",
+    phonenumber: "403-292-2902",
+    email: "test"
+  })
+}
+
+export function getBorrowerLoanInfo(rowdata: object): borrowerLoanInfo {
+  // ... Pass rowdata to db to retrieve borrower info
+  return ({
+    principal: "69",
+    interest: "69",
+    term: "69",
+    paymentperperiod: "69",
+    startdate: "69",
+    frequency: "69",
+    commissioner: "69",
+    commissioninterest: "69"
+  })
 }

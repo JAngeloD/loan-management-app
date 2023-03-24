@@ -26,9 +26,15 @@ export default function Navbar({handleState}: Props) {
               </a>
             </li>
 
-            <li onClick={() => handleState("archive")}>
+            <li onClick={() => handleState("paymentarchive")}>
               <a href="#" className="nav-link px-0 align-middle">
-                <i className="fs-4 bi-book"></i> <span className="ms-1 d-none d-sm-inline">Archive</span>
+                <i className="fs-4 bi-cash"></i> <span className="ms-1 d-none d-sm-inline">Payment Archive</span>
+              </a>
+            </li>
+
+            <li onClick={() => handleState("borrowerarchive")}>
+              <a href="#" className="nav-link px-0 align-middle">
+                <i className="fs-4 bi-archive"></i> <span className="ms-1 d-none d-sm-inline">Borrower Archive</span>
               </a>
             </li>
 

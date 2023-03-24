@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import DebouncedInput from './DebouncedInput'
 import PaginationInputs from './PaginationInputs'
 import { getCoreRowModel, useReactTable, flexRender, getPaginationRowModel, FilterFn, getFilteredRowModel, getSortedRowModel, SortingState, Pagination } from '@tanstack/react-table';
-import type { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef, ColumnSort } from '@tanstack/react-table';
 import { filterFns } from './FuzzyFilter'
 
 
@@ -10,6 +10,7 @@ interface ReactTableProps<T extends object> {
   data: T[];
   columns: ColumnDef<T>[];
   cellClickFunction?: (args: any) => any;
+  sortState?: ColumnSort[];
   showNavigation?: boolean;
   showGlobalFilter?: boolean;
   filterFn?: FilterFn<T>;
@@ -24,19 +25,15 @@ interface ReactTableProps<T extends object> {
 export const FilterTableGeneric = <T extends object>({
   data,
   columns,
+  cellClickFunction = () => void 0,
+  sortState = null,
   showNavigation = true,
   showGlobalFilter = false,
   filterFn = filterFns.fuzzy,
-  cellClickFunction = () => void 0,
 }: ReactTableProps<T>) => {
 
   const [globalFilter, setGlobalFilter] = useState('');
-  const [sorting, setSorting] = React.useState<SortingState>([
-    {
-      id: "nextpaymentdate",
-      desc: false
-    }
-  ])
+  const [sorting, setSorting] = React.useState<SortingState>(sortState)
 
   const table = useReactTable({
     data,

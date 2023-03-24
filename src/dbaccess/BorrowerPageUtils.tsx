@@ -36,7 +36,7 @@ export interface Payments {
 }
 
 export function getBorrowerPaymentsData() {
-  return React.useMemo(
+  return React.useMemo<Payments[]>(
     () => [
       {
         paymentdate: "2022-03-15",

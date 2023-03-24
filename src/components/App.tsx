@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import BorrowerForm from './borrowerform/BorrowerForm'
 import Dashboard from './dashboard/Dashboard'
 import Navbar from './Navbar/Navbar'
+import PaymentArchive from './archive/PaymentArchive'
+import BorrowerArchive from './archive/BorrowerArchive'
 
 function App() {
 
@@ -23,9 +25,10 @@ function App() {
                 return <Dashboard/>
               case "borrowerform":
                 return <BorrowerForm/>
-              case "archive":
-                //Not yet implemented
-                return null
+              case "paymentarchive":
+                return <PaymentArchive/>
+              case "borrowerarchive":
+                return <BorrowerArchive/>
               case "settings":
                 //Not yet implemented
                 return null

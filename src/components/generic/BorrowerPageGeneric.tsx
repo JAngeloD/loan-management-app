@@ -34,8 +34,8 @@ export default function BorrowerPageGeneric({ rowdata, handleDashboardState}: Re
               </div>
               <div className="row mt-2">
                 <div className="col-md-4"><label className="labels">Province</label><input type="text" className="form-control" placeholder={personalInfo.province} /></div>
-                <div className="col-md-4"><label className="labels">Address</label><input type="text" className="form-control" placeholder={personalInfo.address}/></div>
                 <div className="col-md-4"><label className="labels">Postal Code</label><input type="text" className="form-control" placeholder={personalInfo.postalcode} /></div>
+                <div className="col-md-4"><label className="labels">Apt. #</label><input type="text" className="form-control" placeholder={personalInfo.address}/></div>
               </div>
 
               <div className="row mt-2">

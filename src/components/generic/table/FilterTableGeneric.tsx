@@ -52,7 +52,7 @@ export const FilterTableGeneric = <T extends object>({
   });
 
   return (
-    <div className="table-responsive mt-5">
+    <div className="table-responsive">
       {showGlobalFilter ? (
         <DebouncedInput
           value={globalFilter ?? ''}

@@ -9,7 +9,7 @@ export default function PaymentArchive() {
         <div className="card-header bg-dark-subtle rounded">
           <h5 className="mb-1">Payment Archive</h5>
         </div>
-        <div className="p-3 fs-5 fw-semibold">
+        <div className="mt-4 p-2">
           <FilterTableGeneric data={db.getAllArchivedPaymentsData()}
                               columns={db.getAllArchivedPaymentsColumns()}
                               showGlobalFilter

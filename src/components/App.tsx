@@ -5,13 +5,21 @@ import Navbar from './Navbar/Navbar'
 import PaymentArchive from './archive/PaymentArchive'
 import BorrowerArchive from './archive/BorrowerArchive'
 
+export enum parentPageState {
+  "dashboard",
+  "borrowerform",
+  "paymentarchive",
+  "borrowerarchive",
+  "settings"
+}
+
 function App() {
 
   //State of the main screen, dashboard is the default
-  const [mainState, setMainState] = useState("dashboard")
+  const [mainState, setMainState] = useState<parentPageState>(parentPageState.dashboard)
 
   //const handleState = (newState) => {setMainState(newState)} example
-  const handleState = (newState: string) => {setMainState(newState); console.log(mainState)}
+  const handleState = (newState: parentPageState) => {setMainState(newState); console.log(mainState)}
 
   return (
     <>
@@ -21,15 +29,15 @@ function App() {
 
           {(() => {
             switch (mainState) {
-              case "dashboard":
+              case parentPageState.dashboard:
                 return <Dashboard/>
-              case "borrowerform":
+              case parentPageState.borrowerform:
                 return <BorrowerForm/>
-              case "paymentarchive":
+              case parentPageState.paymentarchive:
                 return <PaymentArchive/>
-              case "borrowerarchive":
+              case parentPageState.borrowerarchive:
                 return <BorrowerArchive/>
-              case "settings":
+              case parentPageState.settings:
                 //Not yet implemented
                 return null
               default:

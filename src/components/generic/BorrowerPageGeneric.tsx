@@ -14,7 +14,6 @@ export default function BorrowerPageGeneric({ rowdata, handleDashboardState}: Re
 
   return (
     <div className="card shadow border-0 ps-4 pe-4">
-      <div>{JSON.stringify(rowdata)} test</div>
       <div className="rounded bg-white mt-5">
         <button className="btn btn-primary p-2" onClick={() => { handleDashboardState("viewdashboard", null)}}>
           <i className="bi bi-arrow-90deg-left" /> Go Back

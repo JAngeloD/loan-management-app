@@ -126,6 +126,7 @@ export function getLastPaymentAmount() {
 
 
 export interface BorrowerOverview {
+  loanid: string;
   name: string;
   nextpaymentdate: string;
   paymentval: string;
@@ -136,24 +137,28 @@ export function getBorrowerOverViewListData() {
   const data = React.useMemo(
     () => [
       {
+        loanid: "1",
         name: "Filbo",
         nextpaymentdate: "2022-03-27",
         paymentval: "$299.00",
         remainingterm: 12
       },
       {
+        loanid: "2",
         name: "Sans",
         nextpaymentdate: "2022-05-14",
         paymentval: "$994.00",
         remainingterm: 3
       },
       {
+        loanid: "3",
         name: "Beffica",
         nextpaymentdate: "2023-03-14",
         paymentval: "$939.00",
         remainingterm: 22
       },
       {
+        loanid: "4",
         name: "John",
         nextpaymentdate: "2022-10-21",
         paymentval: "$979.00",
@@ -169,6 +174,11 @@ export function getBorrowerOverViewListData() {
 export function getBorrowerOverViewListColumns() {
   const columns = React.useMemo<ColumnDef<BorrowerOverview>[]>(
     () => [
+      {
+        header: 'Loan ID',
+        cell: (row) => row.renderValue(),
+        accessorKey: 'loanid', // accessor is the "key" in the data
+      },
       {
         header: 'Name',
         cell: (row) => row.renderValue(),

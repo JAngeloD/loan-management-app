@@ -17,23 +17,25 @@ export default function Dashboard() {
   return (
     <div className="container flex-shrink-1 bg-dark-subtle p-4 ">
       {(() => {
-          switch (dashboardState) {
-            case "viewborrower":
-              if (rowdataState !== null) {
-                return <BorrowerPageGenerics rowdata={rowdataState} handleDashboardState={handleDashboardState} />
-              }
-              else {
-                alert("Error, could not fetch row data, please contact admin")
-              }
-            case "viewdashboard":
-              return (
-                <>
-                  <DashboardHeaders/>
-                  <BorrowerTable handleDashboardState={handleDashboardState}/>
-                </>
-              );
-          }
-        })()}
+        switch (dashboardState) {
+          case "viewborrower":
+            if (rowdataState !== null) {
+              return <BorrowerPageGenerics rowdata={rowdataState} handleDashboardState={handleDashboardState} />
+            }
+            else {
+              alert("Error, could not fetch row data, please contact admin")
+            }
+          case "viewdashboard":
+            return (
+              <>
+                <DashboardHeaders />
+                <div className="card shadow border-0 mb-7 p-4 mt-5">
+                  <BorrowerTable handleDashboardState={handleDashboardState} />
+                </div>
+              </>
+            );
+        }
+      })()}
     </div>
   )
 }

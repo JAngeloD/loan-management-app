@@ -1,7 +1,8 @@
 import React from 'react'
+import { parentPageState } from '../App';
 
 interface Props {
-  handleState: (params: string) => any;
+  handleState: (params: parentPageState) => any;
 }
 
 export default function Navbar({handleState}: Props) {
@@ -14,25 +15,25 @@ export default function Navbar({handleState}: Props) {
           </a>
           <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
 
-            <li onClick={() => handleState("dashboard")}>
+            <li onClick={() => handleState(parentPageState.dashboard)}>
               <a href="#" className="nav-link align-middle px-0">
                 <i className="fs-4 bi-house"></i> <span className="ms-1 d-none d-sm-inline ">Dashboard</span>
               </a>
             </li>
 
-            <li onClick={() => handleState("borrowerform")}>
+            <li onClick={() => handleState(parentPageState.borrowerform)}>
               <a href="#" className="nav-link px-0 align-middle">
                 <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Add Borrower</span>
               </a>
             </li>
 
-            <li onClick={() => handleState("paymentarchive")}>
+            <li onClick={() => handleState(parentPageState.paymentarchive)}>
               <a href="#" className="nav-link px-0 align-middle">
                 <i className="fs-4 bi-cash"></i> <span className="ms-1 d-none d-sm-inline">Payment Archive</span>
               </a>
             </li>
 
-            <li onClick={() => handleState("borrowerarchive")}>
+            <li onClick={() => handleState(parentPageState.borrowerarchive)}>
               <a href="#" className="nav-link px-0 align-middle">
                 <i className="fs-4 bi-archive"></i> <span className="ms-1 d-none d-sm-inline">Borrower Archive</span>
               </a>
@@ -40,7 +41,7 @@ export default function Navbar({handleState}: Props) {
 
             <hr className="hr" style={{ width: "100%" }} />
 
-            <li onClick={() => handleState("settings")}>
+            <li onClick={() => handleState(parentPageState.settings)}>
               <a href="#" className="nav-link px-0 align-middle">
                 <i className="fs-4 bi bi-gear"></i> <span className="ms-1 d-none d-sm-inline">Settings</span>
               </a>

@@ -6,6 +6,7 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 import React from 'react'
+import { BorrowerOverview } from './DashboardUtils';
 const db = require('./Connection')
 
 export interface borrowerPersonalInfo {
@@ -87,8 +88,9 @@ export function getBorrowerPaymentsColumns() {
   )
 }
 
-export function getBorrowerPersonalInfo(rowdata: object): borrowerPersonalInfo{
+export function getBorrowerPersonalInfo(rowdata: BorrowerOverview): borrowerPersonalInfo{
   // ... Pass rowdata to db to retrieve borrower info
+
   return ({
     firstname: "Filbo",
     lastname: "Fiddlepie",
@@ -100,7 +102,7 @@ export function getBorrowerPersonalInfo(rowdata: object): borrowerPersonalInfo{
   })
 }
 
-export function getBorrowerLoanInfo(rowdata: object): borrowerLoanInfo {
+export function getBorrowerLoanInfo(rowdata: BorrowerOverview): borrowerLoanInfo {
   // ... Pass rowdata to db to retrieve borrower info
   return ({
     principal: "69",
@@ -113,3 +115,4 @@ export function getBorrowerLoanInfo(rowdata: object): borrowerLoanInfo {
     commissioninterest: "69"
   })
 }
+

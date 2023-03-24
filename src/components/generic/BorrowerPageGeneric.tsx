@@ -1,15 +1,17 @@
 import React from 'react'
 import FilterTableGeneric from './table/FilterTableGeneric'
 import * as db from '../../dbaccess/BorrowerPageUtils'
+import { BorrowerOverview } from '../../dbaccess/DashboardUtils';
 
 interface ReactTableProps {
-  rowdata: object;
+  rowdata: BorrowerOverview;
   handleDashboardState: (newState: string, rowdata: object) => any
 }
 
 export default function BorrowerPageGeneric({ rowdata, handleDashboardState}: ReactTableProps) {
   var personalInfo: db.borrowerPersonalInfo = db.getBorrowerPersonalInfo(rowdata)
   var loanInfo: db.borrowerLoanInfo = db.getBorrowerLoanInfo(rowdata)
+
   return (
     <div className="card shadow border-0 ps-4 pe-4">
       <div>{JSON.stringify(rowdata)} test</div>

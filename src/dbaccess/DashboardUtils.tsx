@@ -124,7 +124,8 @@ export function getLastPaymentAmount() {
   PAYMENT/BORROWER TABLE
 *************************************************************************************************/
 
-interface BorrowerOverview {
+
+export interface BorrowerOverview {
   name: string;
   nextpaymentdate: string;
   paymentval: string;

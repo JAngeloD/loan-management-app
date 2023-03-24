@@ -52,73 +52,67 @@ export const FilterTableGeneric = <T extends object>({
   });
 
   return (
-    <div className="flex flex-col">
-      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="inline-block min-w-full py-4 sm:px-6 lg:px-8">
-          <div className="overflow-hidden p-2">
-            {showGlobalFilter ? (
-              <DebouncedInput
-                value={globalFilter ?? ''}
-                onChange={(value) => setGlobalFilter(String(value))}
-                className="font-lg border-block border p-2 shadow mb-2"
-                placeholder="Search all columns..."
-              />
-            ) : null}
-            <table className="min-w-full text-center">
-              <thead className="border-b bg-gray-50">
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map(header => {
-                      return (
-                        <th key={header.id} colSpan={header.colSpan}>
-                          {header.isPlaceholder ? null : (
-                            <div
-                              {...{
-                                className: header.column.getCanSort()
-                                  ? 'cursor-pointer select-none'
-                                  : '',
-                                onClick: header.column.getToggleSortingHandler(),
-                              }}
-                            >
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                              {{
-                                asc: ' 🔼',
-                                desc: ' 🔽',
-                              }[header.column.getIsSorted() as string] ?? null}
-                            </div>
-                          )}
-                        </th>
-                      )
-                    })}
-                  </tr>
-                ))}
-              </thead>
-              <tbody>
-                {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} className='border-b" bg-white'
-                      onClick={() => {cellClickFunction(row)}}>
-                    {row.getVisibleCells().map((cell) => (
-                      <td  className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900" key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {showNavigation ?
-            <>
-              <PaginationInputs parentTable={table} />
-            </>
-            : null}
-        </div>
-      </div>
+    <div className="table-responsive mt-5">
+      {showGlobalFilter ? (
+        <DebouncedInput
+          value={globalFilter ?? ''}
+          onChange={(value) => setGlobalFilter(String(value))}
+          className="form-control form-input shadow-none mb-2 p-2"
+          placeholder="Search all columns..."
+          style={{width: "50%"}}
+        />
+      ) : null}
+      <table className="table table-responsive table-borderless">
+        <thead className="bg-gray-50">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id} className="bg-light">
+              {headerGroup.headers.map(header => {
+                return (
+                  <th key={header.id} colSpan={header.colSpan}>
+                    {header.isPlaceholder ? null : (
+                      <div
+                        {...{
+                          className: header.column.getCanSort()
+                            ? 'cursor-pointer select-none'
+                            : '',
+                          onClick: header.column.getToggleSortingHandler(),
+                        }}
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        {{
+                          asc: <i className="ps-2 bi bi-arrow-up" />,
+                          desc: <i className="ps-2 bi bi-arrow-down" />,
+                        }[header.column.getIsSorted() as string] ?? null}
+                      </div>
+                    )}
+                  </th>
+                )
+              })}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id} className='border-b" bg-white'
+              onClick={() => { cellClickFunction(row) }}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {showNavigation ?
+        <>
+          <PaginationInputs parentTable={table} />
+        </>
+        : null}
     </div>
-
   )
 }
 

@@ -97,8 +97,8 @@ export default function BorrowerForm() {
             <div className="col-md-6">
               <div className="form-group">
                 <label>Frequency</label>
-                <select id="dropdown" name="frequency" className="form-control bg-secondary-subtle mt-1 p-3" required>
-                  <option disabled selected>Select</option>
+                <select id="dropdown" name="frequency" className="form-control bg-secondary-subtle mt-1 p-3" defaultValue="Select" required>
+                  <option disabled>Select</option>
                   <option value="monthly">Monthly</option>
                   <option value="biweekly">Bi-Weekly</option>
                   <option value="biweekly">Weekly</option>

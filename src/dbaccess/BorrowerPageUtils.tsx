@@ -4,39 +4,14 @@
   Note: If you're seeing this, this means this is just a skeleton for now.
 */
 
-import { ColumnDef } from '@tanstack/react-table';
 import React from 'react'
+import { PersonalInfo, LoanInfo, PaymentInfo } from './Interfaces/Interfaces';
+import { ColumnDef } from '@tanstack/react-table';
 import { BorrowerOverview } from './DashboardUtils';
 const db = require('./Connection')
 
-export interface borrowerPersonalInfo {
-  firstname: string;
-  lastname: string;
-  address: string;
-  province: string;
-  postalcode: string;
-  phonenumber: string;
-  email: string;
-}
-export interface borrowerLoanInfo {
-  principal: string;
-  interest: string;
-  term: string;
-  paymentperperiod: string;
-  startdate: string;
-  frequency: string;
-  commissioner: string;
-  commissioninterest: string;
-}
-
-export interface Payments {
-  paymentdate: string;
-  paymentval: string;
-  paymentstatus: string;
-}
-
 export function getBorrowerPaymentsData() {
-  return React.useMemo<Payments[]>(
+  return React.useMemo<PaymentInfo[]>(
     () => [
       {
         paymentdate: "2022-03-15",
@@ -63,13 +38,13 @@ export function getBorrowerPaymentsData() {
   )
 }
 export function getBorrowerPaymentsColumns() {
-  return React.useMemo<ColumnDef<Payments>[]>(
+  return React.useMemo<ColumnDef<PaymentInfo>[]>(
     () => [
       {
         header: 'Payment Date',
         cell: (row) => row.renderValue(),
         accessorKey: 'paymentdate',
-        sortType: (a: Payments, b: Payments) => {
+        sortType: (a: PaymentInfo, b: PaymentInfo) => {
           return new Date(a.paymentdate).getTime() - new Date(b.paymentdate).getTime()
         }
       },
@@ -88,23 +63,25 @@ export function getBorrowerPaymentsColumns() {
   )
 }
 
-export function getBorrowerPersonalInfo(rowdata: BorrowerOverview): borrowerPersonalInfo{
+export function getBorrowerPersonalInfo(rowdata: BorrowerOverview): PersonalInfo {
   // ... Pass rowdata to db to retrieve borrower info
 
   return ({
-    firstname: "Filbo",
-    lastname: "Fiddlepie",
+    borrowerid: "1",
+    firstName: "Filbo",
+    lastName: "Fiddlepie",
     address: "snaktooth island",
     province: "what",
-    postalcode: "123 456",
-    phonenumber: "403-292-2902",
+    postalCode: "123 456",
+    phoneNumber: "403-292-2902",
     email: "test"
   })
 }
 
-export function getBorrowerLoanInfo(rowdata: BorrowerOverview): borrowerLoanInfo {
+export function getBorrowerLoanInfo(rowdata: BorrowerOverview): LoanInfo {
   // ... Pass rowdata to db to retrieve borrower info
   return ({
+    loanid: "1",
     principal: "69",
     interest: "69",
     term: "69",

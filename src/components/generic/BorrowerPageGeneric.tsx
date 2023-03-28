@@ -1,6 +1,8 @@
 import React from 'react'
 import FilterTableGeneric from './table/FilterTableGeneric'
 import * as db from '../../dbaccess/BorrowerPageUtils'
+
+import { PersonalInfo, LoanInfo } from '../../dbaccess/Interfaces/Interfaces';
 import { BorrowerOverview } from '../../dbaccess/DashboardUtils';
 
 interface ReactTableProps {
@@ -9,8 +11,8 @@ interface ReactTableProps {
 }
 
 export default function BorrowerPageGeneric({ rowdata, handleDashboardState}: ReactTableProps) {
-  var personalInfo: db.borrowerPersonalInfo = db.getBorrowerPersonalInfo(rowdata)
-  var loanInfo: db.borrowerLoanInfo = db.getBorrowerLoanInfo(rowdata)
+  var personalInfo: PersonalInfo = db.getBorrowerPersonalInfo(rowdata)
+  var loanInfo: LoanInfo = db.getBorrowerLoanInfo(rowdata)
 
   return (
     <div className="card shadow border-0 ps-4 pe-4">
@@ -25,20 +27,20 @@ export default function BorrowerPageGeneric({ rowdata, handleDashboardState}: Re
                 <h3 className="text-right">Personal Info</h3>
               </div>
               <div className="row mt-2">
-                <div className="col-md-6"><label className="labels">First Name</label><input type="text" className="form-control" placeholder={personalInfo.firstname} /></div>
-                <div className="col-md-6"><label className="labels">Last Name </label><input type="text" className="form-control" placeholder={personalInfo.lastname} /></div>
+                <div className="col-md-6"><label className="labels">First Name</label><input type="text" className="form-control" placeholder={personalInfo.firstName} /></div>
+                <div className="col-md-6"><label className="labels">Last Name </label><input type="text" className="form-control" placeholder={personalInfo.lastName} /></div>
               </div>
               <div className="row mt-2">
                 <div className="col-md-12"><label className="labels">Address</label><input type="text" className="form-control" placeholder={personalInfo.address} /></div>
               </div>
               <div className="row mt-2">
                 <div className="col-md-4"><label className="labels">Province</label><input type="text" className="form-control" placeholder={personalInfo.province} /></div>
-                <div className="col-md-4"><label className="labels">Postal Code</label><input type="text" className="form-control" placeholder={personalInfo.postalcode} /></div>
+                <div className="col-md-4"><label className="labels">Postal Code</label><input type="text" className="form-control" placeholder={personalInfo.postalCode} /></div>
                 <div className="col-md-4"><label className="labels">Apt. #</label><input type="text" className="form-control" placeholder={personalInfo.address}/></div>
               </div>
 
               <div className="row mt-2">
-                <div className="col-md-6"><label className="labels">Phone Number</label><input type="text" className="form-control" placeholder={personalInfo.phonenumber} /></div>
+                <div className="col-md-6"><label className="labels">Phone Number</label><input type="text" className="form-control" placeholder={personalInfo.phoneNumber} /></div>
                 <div className="col-md-6"><label className="labels">Email</label><input type="text" className="form-control" placeholder={personalInfo.email} /></div>
               </div>
               <hr style={{ borderTop: "3px solid" }} />

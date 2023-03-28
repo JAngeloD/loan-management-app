@@ -5,34 +5,34 @@
 */
 
 import React from 'react'
+import { PersonalInfo } from './Interfaces/Interfaces'
 import { ColumnDef } from '@tanstack/react-table';
 const db = require('./Connection')
 
-export interface ArchivedBorrowers {
+
+export interface ArchivedBorrowers extends Pick<PersonalInfo, "firstName" | "lastName" | "address">  {
   archiveddate: string; //last payment date
-  firstname: string;
-  lastname: string;
-  address: string;
 }
+
 export function getAllArchivedPaymentsData() {
   return React.useMemo<ArchivedBorrowers[]>(
     () => [
       {
         archiveddate: "2022-03-15",
-        firstname: "Filbo ",
-        lastname: "FiddlePie",
+        firstName: "Filbo ",
+        lastName: "FiddlePie",
         address: "Snaktooth Island",
       },
       {
         archiveddate: "2022-04-15",
-        firstname: "Filbo",
-        lastname: "FiddlePie",
+        firstName: "Filbo",
+        lastName: "FiddlePie",
         address: "Snaktooth Island",
       },
       {
         archiveddate: "2022-05-15",
-        firstname: "Filbo",
-        lastname: "FiddlePie",
+        firstName: "Filbo",
+        lastName: "FiddlePie",
         address: "Snaktooth Island",
       },
     ],
@@ -53,12 +53,12 @@ export function getAllArchivedPaymentsColumns() {
       {
         header: 'First Name',
         cell: (row) => row.renderValue(),
-        accessorKey: 'firstname',
+        accessorKey: 'firstName',
       },
       {
         header: 'Last Name',
         cell: (row) => row.renderValue(),
-        accessorKey: 'lastname',
+        accessorKey: 'lastName',
       },
       {
         header: 'Address',

@@ -3,14 +3,14 @@
  */
 
 export interface PersonalInfo{
-  borrowerid: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  province: string;
-  postalCode: string;
-  phoneNumber: string;
-  email: string;
+  borrowerid?: string;
+  firstName?: string;
+  lastName?: string;
+  address?: string;
+  province?: string;
+  postalCode?: string;
+  phoneNumber?: string;
+  email?: string;
 }
 
 export interface LoanInfo {

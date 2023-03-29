@@ -18,10 +18,29 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
   let personalInfo: PersonalInfo = db.getBorrowerPersonalInfo(borrowerRowdata)
   let loanInfo: LoanInfo = db.getBorrowerLoanInfo(borrowerRowdata)
 
+  //Handles validation for form in modal popup
+  const [validated, setValidated] = useState(false);
+  const handleSubmit = (event: any) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      //Validation Failed
+      event.preventDefault();
+      event.stopPropagation();
+
+      setValidated(true);
+      return
+    }
+
+    //Validation Passed
+    console.log("payment info successfully changed")
+    setValidated(false);
+    setShow(false);
+  };
+
   //Hooks and functions handling the modal responsible for editing payment dates
   const defaultPaymentInfo = {
-    paymentdate: "",
-    paymentval: "",
+    paymentdate: new Date().toISOString().split('T')[0],
+    paymentval: 0,
     paymentstatus: false,
   }
   const [show, setShow] = useState(false);
@@ -29,6 +48,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
 
   const handleShow = (paymentRowdata: any) => {
     setPaymentRowdata(paymentRowdata.original)
+    setValidated(false)
     setShow(true)
   }
   const handleClose = () => {
@@ -36,21 +56,6 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
     setShow(false)
   }
 
-  //Handles validation for form in modal popup
-  const [validated, setValidated] = useState(false);
-
-  const handleSubmit = (event: any) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-      setValidated(true);
-      return
-    }
-
-    setValidated(false);
-    setShow(false);
-  };
 
   return (
     <div className="card shadow border-0 ps-4 pe-4">
@@ -124,8 +129,8 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Payment Date</Form.Label>
                       <Form.Control
-                        type="text"
-                        defaultValue={paymentRowdata.paymentdate}
+                        type="date"
+                        defaultValue={new Date(paymentRowdata.paymentdate).toISOString().substring(0,10)}
                         required />
                       <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
                       <Form.Control.Feedback type="invalid">Please enter a valid date</Form.Control.Feedback>
@@ -134,7 +139,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                       <Form.Label>Payment Amount</Form.Label>
                       <Form.Control
-                        type="text"
+                        type="number"
                         defaultValue={paymentRowdata.paymentval}
                         required />
                       <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>

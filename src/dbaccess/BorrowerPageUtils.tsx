@@ -5,7 +5,7 @@
 */
 
 import React from 'react'
-import { PersonalInfo, LoanInfo, PaymentInfo } from './Interfaces/Interfaces';
+import { PersonalInfo, LoanInfo, PaymentInfo, currencyFormatter} from './Interfaces/Interfaces';
 import { ColumnDef } from '@tanstack/react-table';
 import { BorrowerOverview } from './DashboardUtils';
 const db = require('./Connection')
@@ -15,22 +15,22 @@ export function getBorrowerPaymentsData() {
     () => [
       {
         paymentdate: "2022-03-15",
-        paymentval: "$250.00",
+        paymentval: 250.00,
         paymentstatus: true
       },
       {
         paymentdate: "2022-04-15",
-        paymentval: "$250.00",
+        paymentval: 250.00,
         paymentstatus: false
       },
       {
         paymentdate: "2022-05-15",
-        paymentval: "$250.00",
+        paymentval: 250.00,
         paymentstatus: false
       },
       {
         paymentdate: "2022-06-15",
-        paymentval: "$250.00",
+        paymentval: 250.00,
         paymentstatus: false
       }
     ],
@@ -50,12 +50,12 @@ export function getBorrowerPaymentsColumns() {
       },
       {
         header: 'Payment Amount',
-        cell: (row) => row.renderValue(),
+        cell: (row) => currencyFormatter.format(row.getValue<number>()),
         accessorKey: 'paymentval',
       },
       {
         header: 'Status',
-        cell: (row) => row.renderValue(),
+        cell: (row) => row.getValue() ? "Paid" : "Not Paid",
         accessorKey: 'paymentstatus',
       },
     ],

@@ -27,6 +27,11 @@ export interface LoanInfo {
 
 export interface PaymentInfo {
   paymentdate: string;
-  paymentval: string;
+  paymentval: number;
   paymentstatus: boolean;
 }
+
+export const currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});

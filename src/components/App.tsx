@@ -19,7 +19,7 @@ function App() {
   const [mainState, setMainState] = useState<parentPageState>(parentPageState.dashboard)
 
   //const handleState = (newState) => {setMainState(newState)} example
-  const handleState = (newState: parentPageState) => {setMainState(newState); console.log(mainState)}
+  const handleState = (newState: parentPageState) => {setMainState(newState)}
 
   return (
     <>

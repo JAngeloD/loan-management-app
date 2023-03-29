@@ -16,22 +16,22 @@ export function getBorrowerPaymentsData() {
       {
         paymentdate: "2022-03-15",
         paymentval: "$250.00",
-        paymentstatus: "paid"
+        paymentstatus: true
       },
       {
         paymentdate: "2022-04-15",
         paymentval: "$250.00",
-        paymentstatus: "not paid"
+        paymentstatus: false
       },
       {
         paymentdate: "2022-05-15",
         paymentval: "$250.00",
-        paymentstatus: "not paid"
+        paymentstatus: false
       },
       {
         paymentdate: "2022-06-15",
         paymentval: "$250.00",
-        paymentstatus: "not paid"
+        paymentstatus: false
       }
     ],
     []

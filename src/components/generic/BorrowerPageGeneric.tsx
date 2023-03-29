@@ -4,7 +4,7 @@ import FilterTableGeneric from './table/FilterTableGeneric'
 
 import * as db from '../../dbaccess/BorrowerPageUtils'
 
-import { PersonalInfo, LoanInfo } from '../../dbaccess/Interfaces/Interfaces';
+import { PersonalInfo, LoanInfo, PaymentInfo } from '../../dbaccess/Interfaces/Interfaces';
 import { BorrowerOverview } from '../../dbaccess/DashboardUtils';
 
 interface ReactTableProps {
@@ -19,16 +19,38 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
   let loanInfo: LoanInfo = db.getBorrowerLoanInfo(borrowerRowdata)
 
   //Hooks and functions handling the modal responsible for editing payment dates
+  const defaultPaymentInfo = {
+    paymentdate: "",
+    paymentval: "",
+    paymentstatus: false,
+  }
   const [show, setShow] = useState(false);
-  const [paymentRowdata, setPaymentRowdata] = useState(null)
-  const handleShow = (paymentRowdata: object) => {
-    setPaymentRowdata(paymentRowdata)
+  const [paymentRowdata, setPaymentRowdata] = useState<PaymentInfo>(defaultPaymentInfo)
+
+  const handleShow = (paymentRowdata: any) => {
+    setPaymentRowdata(paymentRowdata.original)
     setShow(true)
   }
   const handleClose = () => {
-    setPaymentRowdata(null)
+    setPaymentRowdata(defaultPaymentInfo)
     setShow(false)
   }
+
+  //Handles validation for form in modal popup
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event: any) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      setValidated(true);
+      return
+    }
+
+    setValidated(false);
+    setShow(false);
+  };
 
   return (
     <div className="card shadow border-0 ps-4 pe-4">
@@ -97,33 +119,43 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                   <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
 
-                <Form>
+                <Form noValidate validated={validated} onSubmit={handleSubmit}>
                   <Modal.Body>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>Email address</Form.Label>
-                      <Form.Control type="email" placeholder="Enter email" required/>
+                      <Form.Label>Payment Date</Form.Label>
+                      <Form.Control
+                        type="text"
+                        defaultValue={paymentRowdata.paymentdate}
+                        required />
+                      <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">Please enter a valid date</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Label>Password</Form.Label>
-                      <Form.Control type="password" placeholder="Password" />
+                      <Form.Label>Payment Amount</Form.Label>
+                      <Form.Control
+                        type="text"
+                        defaultValue={paymentRowdata.paymentval}
+                        required />
+                      <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">Please enter a valid payment amount</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="Check me out" />
+                      <Form.Check defaultChecked={(paymentRowdata.paymentstatus) ? true : false} type="checkbox" label="Paid" />
                     </Form.Group>
+
                   </Modal.Body>
                   <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                       Close
                     </Button>
-                    <Button variant="primary" onSubmit={handleClose}>
+                    <Button variant="primary" type="submit">
                       Save Changes
                     </Button>
                   </Modal.Footer>
                 </Form>
               </Modal>
-
             </div>
           </div>
         </div>

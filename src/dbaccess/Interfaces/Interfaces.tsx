@@ -28,5 +28,5 @@ export interface LoanInfo {
 export interface PaymentInfo {
   paymentdate: string;
   paymentval: string;
-  paymentstatus: string;
+  paymentstatus: boolean;
 }

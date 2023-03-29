@@ -1,23 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Button, Modal, Form } from 'react-bootstrap'
 import FilterTableGeneric from './table/FilterTableGeneric'
+
 import * as db from '../../dbaccess/BorrowerPageUtils'
 
 import { PersonalInfo, LoanInfo } from '../../dbaccess/Interfaces/Interfaces';
 import { BorrowerOverview } from '../../dbaccess/DashboardUtils';
 
 interface ReactTableProps {
-  rowdata: BorrowerOverview;
-  handleDashboardState: (newState: string, rowdata: object) => any
+  borrowerRowdata: BorrowerOverview;
+  handleDashboardState: (newState: string, borrowerRowdata: object) => any
 }
 
-export default function BorrowerPageGeneric({ rowdata, handleDashboardState}: ReactTableProps) {
-  var personalInfo: PersonalInfo = db.getBorrowerPersonalInfo(rowdata)
-  var loanInfo: LoanInfo = db.getBorrowerLoanInfo(rowdata)
+export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardState }: ReactTableProps) {
+
+  //Stores data objects for the "Personal" and "Loan" sections in the page
+  let personalInfo: PersonalInfo = db.getBorrowerPersonalInfo(borrowerRowdata)
+  let loanInfo: LoanInfo = db.getBorrowerLoanInfo(borrowerRowdata)
+
+  //Hooks and functions handling the modal responsible for editing payment dates
+  const [show, setShow] = useState(false);
+  const [paymentRowdata, setPaymentRowdata] = useState(null)
+  const handleShow = (paymentRowdata: object) => {
+    setPaymentRowdata(paymentRowdata)
+    setShow(true)
+  }
+  const handleClose = () => {
+    setPaymentRowdata(null)
+    setShow(false)
+  }
 
   return (
     <div className="card shadow border-0 ps-4 pe-4">
       <div className="rounded bg-white mt-5">
-        <button className="btn btn-primary p-2" onClick={() => { handleDashboardState("viewdashboard", null)}}>
+        <button className="btn btn-primary p-2" onClick={() => { handleDashboardState("viewdashboard", null) }}>
           <i className="bi bi-arrow-90deg-left" /> Go Back
         </button>
         <div className="row">
@@ -36,7 +52,7 @@ export default function BorrowerPageGeneric({ rowdata, handleDashboardState}: Re
               <div className="row mt-2">
                 <div className="col-md-4"><label className="labels">Province</label><input type="text" className="form-control" placeholder={personalInfo.province} /></div>
                 <div className="col-md-4"><label className="labels">Postal Code</label><input type="text" className="form-control" placeholder={personalInfo.postalCode} /></div>
-                <div className="col-md-4"><label className="labels">Apt. #</label><input type="text" className="form-control" placeholder={personalInfo.address}/></div>
+                <div className="col-md-4"><label className="labels">Apt. #</label><input type="text" className="form-control" placeholder={personalInfo.address} /></div>
               </div>
 
               <div className="row mt-2">
@@ -69,8 +85,45 @@ export default function BorrowerPageGeneric({ rowdata, handleDashboardState}: Re
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h3 className="text-right">Payments</h3>
               </div>
-              <FilterTableGeneric data={db.getBorrowerPaymentsData()}
-                                  columns={db.getBorrowerPaymentsColumns()} />
+              <FilterTableGeneric data={db.getBorrowerPaymentsData()} columns={db.getBorrowerPaymentsColumns()} cellClickFunction={handleShow} />
+
+              <Modal
+                show={show}
+                onHide={handleClose}
+                className="p-5"
+                backdrop="static"
+                keyboard={false}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+
+                <Form>
+                  <Modal.Body>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Label>Email address</Form.Label>
+                      <Form.Control type="email" placeholder="Enter email" required/>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control type="password" placeholder="Password" />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="Check me out" />
+                    </Form.Group>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
+                    </Button>
+                    <Button variant="primary" onSubmit={handleClose}>
+                      Save Changes
+                    </Button>
+                  </Modal.Footer>
+                </Form>
+              </Modal>
+
             </div>
           </div>
         </div>

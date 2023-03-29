@@ -8,7 +8,7 @@ import DashboardHeaders from './DashboardHeaders'
 export default function Dashboard() {
 
   const [dashboardState, setDashboardState] = useState("viewdashboard")
-  const [rowdataState, setRowdataState] = useState(null) //Don't call ".original" already is the JSON object
+  const [borrowerRowdata, setRowdataState] = useState(null) //Don't call ".original" already is the JSON object
   const handleDashboardState = (newState: string, rowdata: object) => {
     setDashboardState(newState)
     setRowdataState(rowdata)
@@ -19,8 +19,8 @@ export default function Dashboard() {
       {(() => {
         switch (dashboardState) {
           case "viewborrower":
-            if (rowdataState !== null) {
-              return <BorrowerPageGenerics rowdata={rowdataState} handleDashboardState={handleDashboardState} />
+            if (borrowerRowdata !== null) {
+              return <BorrowerPageGenerics borrowerRowdata={borrowerRowdata} handleDashboardState={handleDashboardState} />
             }
             else {
               alert("Error, could not fetch row data, please contact admin")

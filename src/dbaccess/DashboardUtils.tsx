@@ -9,7 +9,10 @@
 */
 
 import React from 'react'
+
+import { PersonalInfo, LoanInfo } from './Interfaces/Interfaces';
 import { ColumnDef } from '@tanstack/react-table';
+
 const db = require('./Connection')
 
 

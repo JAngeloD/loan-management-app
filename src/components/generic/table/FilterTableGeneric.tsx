@@ -25,7 +25,7 @@ interface ReactTableProps<T extends object> {
 export const FilterTableGeneric = <T extends object>({
   data,
   columns,
-  cellClickFunction = () => void 0,
+  cellClickFunction = () => null,
   sortState = null,
   showNavigation = true,
   showGlobalFilter = false,
@@ -59,7 +59,7 @@ export const FilterTableGeneric = <T extends object>({
           onChange={(value) => setGlobalFilter(String(value))}
           className="form-control form-input shadow-none mb-2 p-2"
           placeholder="Search all columns..."
-          style={{width: "50%"}}
+          style={{ width: "50%" }}
         />
       ) : null}
       <table className="table table-responsive table-borderless">
@@ -72,9 +72,9 @@ export const FilterTableGeneric = <T extends object>({
                     {header.isPlaceholder ? null : (
                       <div
                         {...{
-                          className: header.column.getCanSort()
-                            ? 'cursor-pointer select-none'
-                            : '',
+                          style: header.column.getCanSort()
+                            ? { cursor: "pointer" }
+                            : {},
                           onClick: header.column.getToggleSortingHandler(),
                         }}
                       >
@@ -96,8 +96,15 @@ export const FilterTableGeneric = <T extends object>({
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className='border-b" bg-white'
-              onClick={() => { cellClickFunction(row) }}>
+            <tr
+              key={row.id}
+              className='border-b" bg-white'
+              onClick={() => { cellClickFunction(row) }}
+              style={cellClickFunction !== null
+                ? {cursor: "pointer"}
+                : {}
+              }
+            >
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}

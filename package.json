@@ -40,6 +40,7 @@
     "postcss": "^8.4.8",
     "precss": "^4.0.0",
     "react": "^17.0.2",
+    "react-bootstrap": "^2.7.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap'
 import FilterTableGeneric from './table/FilterTableGeneric'
+import DebouncedInput from './table/DebouncedInput'
 
 import * as db from '../../dbaccess/BorrowerPageUtils'
 
@@ -12,6 +13,11 @@ interface ReactTableProps {
   handleDashboardState: (newState: string, borrowerRowdata: object) => any
 }
 
+enum Action {
+  "add",
+  "edit"
+}
+
 export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardState }: ReactTableProps) {
 
   //Stores data objects for the "Personal" and "Loan" sections in the page
@@ -19,43 +25,63 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
   let loanInfo: LoanInfo = db.getBorrowerLoanInfo(borrowerRowdata)
 
   //Handles validation for form in modal popup
-  const [validated, setValidated] = useState(false);
-  const handleSubmit = (event: any) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      //Validation Failed
-      event.preventDefault();
-      event.stopPropagation();
-
-      setValidated(true);
-      return
-    }
-
-    //Validation Passed
-    console.log("payment info successfully changed")
-    setValidated(false);
-    setShow(false);
-  };
-
-  //Hooks and functions handling the modal responsible for editing payment dates
   const defaultPaymentInfo = {
     paymentdate: new Date().toISOString().split('T')[0],
     paymentval: 0,
     paymentstatus: false,
   }
-  const [show, setShow] = useState(false);
-  const [paymentRowdata, setPaymentRowdata] = useState<PaymentInfo>(defaultPaymentInfo)
+  const [validated, setValidated] = useState(false); // Result when adding or editing payments
+  const [intent, setIntent] = useState<Action>(); // Stores user intent when altering payments
+  const [show, setShow] = useState(false); // Hooks for handling modal viewing
+  const [paymentRowdata, setPaymentRowdata] = useState<PaymentInfo>(defaultPaymentInfo); // Stores row data from payment table
+  const [formData, setFormData] = useState<PaymentInfo>(defaultPaymentInfo);
 
   const handleShow = (paymentRowdata: any) => {
-    setPaymentRowdata(paymentRowdata.original)
+    if (paymentRowdata !== null) {
+      setPaymentRowdata(paymentRowdata.original);
+      setIntent(Action.edit)
+    }
+    else {
+      setPaymentRowdata(defaultPaymentInfo);
+      setIntent(Action.add)
+    }
+
     setValidated(false)
     setShow(true)
   }
+
   const handleClose = () => {
     setPaymentRowdata(defaultPaymentInfo)
     setShow(false)
   }
 
+  const handleSubmit = (event: any) => {
+    const form = event.currentTarget;
+    event.preventDefault();
+
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+
+      setValidated(true);
+    }
+    else {
+      switch (intent) {
+        case Action.add:
+          db.addPaymentToBorrower();
+          break;
+        case Action.edit:
+          db.editPaymentFromBorrower();
+          break;
+      }
+
+      console.log(formData)
+
+      setValidated(false);
+      setShow(false);
+    }
+
+    setFormData(defaultPaymentInfo)
+  };
 
   return (
     <div className="card shadow border-0 ps-4 pe-4">
@@ -109,9 +135,12 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
           </div>
           <div className="col">
             <div className="p-2 py-5">
+
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h3 className="text-right">Payments</h3>
+                <Button variant="primary" onClick={() => {handleShow(null)}}>Add</Button>
               </div>
+
               <FilterTableGeneric data={db.getBorrowerPaymentsData()} columns={db.getBorrowerPaymentsColumns()} cellClickFunction={handleShow} />
 
               <Modal
@@ -121,26 +150,29 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                 backdrop="static"
                 keyboard={false}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Modal heading</Modal.Title>
+                  <Modal.Title>{intent === Action.add ? "Add Payment" : "Edit Payment"}</Modal.Title>
                 </Modal.Header>
 
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                   <Modal.Body>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Payment Date</Form.Label>
-                      <Form.Control
+                      <DebouncedInput
+                        value= {new Date(paymentRowdata.paymentdate).toISOString().substring(0,10)}
+                        onChange = {(e) => setFormData(formData => ({...formData, paymentdate: e.toString()}))}
                         type="date"
-                        defaultValue={new Date(paymentRowdata.paymentdate).toISOString().substring(0,10)}
-                        required />
+                        required
+                      />
                       <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
                       <Form.Control.Feedback type="invalid">Please enter a valid date</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                       <Form.Label>Payment Amount</Form.Label>
-                      <Form.Control
+                      <DebouncedInput
+                        value={paymentRowdata.paymentval}
+                        onChange = {(e: number) => setFormData(formData => ({...formData, paymentval: e.valueOf()}))}
                         type="number"
-                        defaultValue={paymentRowdata.paymentval}
                         required />
                       <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
                       <Form.Control.Feedback type="invalid">Please enter a valid payment amount</Form.Control.Feedback>
@@ -161,6 +193,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                   </Modal.Footer>
                 </Form>
               </Modal>
+
             </div>
           </div>
         </div>

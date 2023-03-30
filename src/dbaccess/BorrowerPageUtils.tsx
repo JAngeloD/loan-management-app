@@ -93,3 +93,10 @@ export function getBorrowerLoanInfo(rowdata: BorrowerOverview): LoanInfo {
   })
 }
 
+export function addPaymentToBorrower() {
+  console.log("added payment to borrower")
+}
+
+export function editPaymentFromBorrower() {
+  console.log("edited payment from borrower")
+}

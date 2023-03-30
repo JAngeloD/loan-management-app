@@ -26,6 +26,7 @@ export interface LoanInfo {
 }
 
 export interface PaymentInfo {
+  paymentID: string;
   paymentdate: string;
   paymentval: number;
   paymentstatus: boolean;

@@ -15,7 +15,8 @@ export default function () {
             </div>
             <div className="mt-2 mb-0 text-sm">
               <span className="badge badge-pill bg-success-subtle text-success me-2">
-                <i className="bi bi-arrow-up me-1"></i>{db.getLastCommissionAmount()}
+                <i className="bi bi-arrow-up me-1"/>
+                {db.getLastCommissionAmount()}
               </span>
               <span className="text-nowrap text-xs text-muted">For {db.getLastCommissionName()}</span>
             </div>
@@ -34,7 +35,7 @@ export default function () {
             </div>
             <div className="mt-2 mb-0 text-sm">
               <span className="badge badge-pill bg-success-subtle text-success me-2">
-                <i className="bi bi-plus me-1"></i>{db.getPaymentsLeft()}
+                <i className="bi bi-plus me-1"/>{db.getPaymentsLeft()}
               </span>
               <span className="text-nowrap text-xs text-muted">Total more payments from everyone</span>
             </div>
@@ -53,7 +54,8 @@ export default function () {
             </div>
             <div className="mt-2 mb-0 text-sm">
               <span className="badge badge-pill bg-success-subtle text-success me-2">
-                <i className="bi bi-arrow-up me-1"></i><>{db.getLastInterestAmount()} {db.getLastPaymentDate()}</>
+                <i className="bi bi-arrow-up me-1"/>
+                {`${db.getLastInterestAmount()} (${db.getLastPaymentDate()})`}
               </span>
               <span className="text-nowrap text-xs text-muted">Last payment from {db.getLastPaymentBorrower()}</span>
             </div>
@@ -72,7 +74,8 @@ export default function () {
             </div>
             <div className="mt-2 mb-0 text-sm">
               <span className="badge badge-pill bg-success-subtle text-success me-2">
-                <i className="bi bi-arrow-up me-1"></i>{db.getLastPaymentAmount()}
+                <i className="bi bi-arrow-up me-1"/>
+                {db.getLastPaymentAmount()}
               </span>
               <span className="text-nowrap text-xs text-muted">From {db.getLastPaymentBorrower()}</span>
             </div>

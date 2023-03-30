@@ -14,21 +14,25 @@ export function getBorrowerPaymentsData() {
   return React.useMemo<PaymentInfo[]>(
     () => [
       {
+        paymentID: "1",
         paymentdate: "2022-03-15",
         paymentval: 250.00,
         paymentstatus: true
       },
       {
+        paymentID: "2",
         paymentdate: "2022-04-15",
         paymentval: 250.00,
         paymentstatus: false
       },
       {
+        paymentID: "3",
         paymentdate: "2022-05-15",
         paymentval: 250.00,
         paymentstatus: false
       },
       {
+        paymentID: "4",
         paymentdate: "2022-06-15",
         paymentval: 250.00,
         paymentstatus: false

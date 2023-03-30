@@ -26,6 +26,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
 
   //Handles validation for form in modal popup
   const defaultPaymentInfo = {
+    paymentID: "1",
     paymentdate: new Date().toISOString().split('T')[0],
     paymentval: 0,
     paymentstatus: false,

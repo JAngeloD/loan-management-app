@@ -33,7 +33,7 @@ export default function Dashboard() {
                   <BorrowerTable handleDashboardState={handleDashboardState} />
                 </div>
               </>
-            );
+            )
         }
       })()}
     </div>

@@ -40,6 +40,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
     if (paymentRowdata !== null) {
       setPaymentRowdata(paymentRowdata.original);
       setIntent(Action.edit)
+      setFormData(paymentRowdata.original)
     }
     else {
       setPaymentRowdata(defaultPaymentInfo);
@@ -52,6 +53,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
 
   const handleClose = () => {
     setPaymentRowdata(defaultPaymentInfo)
+    setFormData(defaultPaymentInfo)
     setShow(false)
   }
 
@@ -138,7 +140,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
 
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h3 className="text-right">Payments</h3>
-                <Button variant="primary" onClick={() => {handleShow(null)}}>Add</Button>
+                <Button variant="primary" onClick={() => { handleShow(null) }}>Add</Button>
               </div>
 
               <FilterTableGeneric data={db.getBorrowerPaymentsData()} columns={db.getBorrowerPaymentsColumns()} cellClickFunction={handleShow} />
@@ -148,7 +150,9 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                 onHide={handleClose}
                 className="p-5"
                 backdrop="static"
-                keyboard={false}>
+                keyboard={false}
+                onEnter={null}
+              >
                 <Modal.Header closeButton>
                   <Modal.Title>{intent === Action.add ? "Add Payment" : "Edit Payment"}</Modal.Title>
                 </Modal.Header>
@@ -158,8 +162,9 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Payment Date</Form.Label>
                       <DebouncedInput
-                        value= {new Date(paymentRowdata.paymentdate).toISOString().substring(0,10)}
-                        onChange = {(e) => setFormData(formData => ({...formData, paymentdate: e.toString()}))}
+                        value={new Date(paymentRowdata.paymentdate).toISOString().substring(0, 10)}
+                        onChange={(e) => setFormData(formData => ({ ...formData, paymentdate: e.toString() }))}
+                        onKeyDown={(e) => {e.key === 'Enter' && e.preventDefault()}}
                         type="date"
                         required
                       />
@@ -171,17 +176,24 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                       <Form.Label>Payment Amount</Form.Label>
                       <DebouncedInput
                         value={paymentRowdata.paymentval}
-                        onChange = {(e: number) => setFormData(formData => ({...formData, paymentval: e.valueOf()}))}
+                        onChange={(e: number) => setFormData(formData => ({ ...formData, paymentval: e.valueOf() }))}
+                        onKeyDown={(e) => {e.key === 'Enter' && e.preventDefault()}}
                         type="number"
-                        required />
+                        min= {1}
+                        required
+                      />
                       <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
-                      <Form.Control.Feedback type="invalid">Please enter a valid payment amount</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">Please enter a valid payment amount ({">"}0)</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                      <Form.Check defaultChecked={(paymentRowdata.paymentstatus) ? true : false} type="checkbox" label="Paid" />
+                      <Form.Check defaultChecked={(paymentRowdata.paymentstatus) ? true : false}
+                        type="checkbox"
+                        label="Paid"
+                        onChange={(e) => setFormData(formData => ({ ...formData, paymentstatus: e.target.checked }))}
+                        onKeyDown={(e) => {e.key === 'Enter' && e.preventDefault()}}
+                      />
                     </Form.Group>
-
                   </Modal.Body>
                   <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>

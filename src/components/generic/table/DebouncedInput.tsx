@@ -29,8 +29,8 @@ const DebouncedInput = ({ value: initialValue, onChange, debounceTime = 300, use
 
   return (
     useReactBTFormControl
-    ? <input {...props} defaultValue={value} onChange={(e) => setValue(e.target.value)} />
-    : <Form.Control {...props} defaultValue={value} onChange={(e) => setValue(e.target.value)} />
+    ? <Form.Control {...props} defaultValue={value} onChange={(e) => setValue(e.target.value)}/>
+    : <input {...props} defaultValue={value} onChange={(e) => setValue(e.target.value)} />
   )
 };
 

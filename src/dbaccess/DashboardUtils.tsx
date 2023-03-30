@@ -92,7 +92,7 @@ export function getLastPaymentDate() {
   //RETURN TYPE: Date (YYYY,MM,DD)
   //EXAMPLE: 2023/03/18
 
-  return new Date("2023/03/18").toISOString()
+  return new Date("2023/03/18").toISOString().substring(0, 10)
 }
 
 export function getLastPaymentBorrower() {

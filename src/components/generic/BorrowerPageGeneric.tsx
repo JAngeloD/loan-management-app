@@ -167,6 +167,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                         onChange={(e) => setFormData(formData => ({ ...formData, paymentdate: e.toString() }))}
                         onKeyDown={(e) => {e.key === 'Enter' && e.preventDefault()}}
                         type="date"
+                        useReactBTFormControl = {true}
                         required
                       />
                       <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
@@ -177,10 +178,11 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                       <Form.Label>Payment Amount</Form.Label>
                       <DebouncedInput
                         value={paymentRowdata.paymentval}
-                        onChange={(e: number) => setFormData(formData => ({ ...formData, paymentval: e.valueOf() }))}
+                        onChange={(e) => setFormData(formData => ({ ...formData, paymentval: parseFloat(e.toString())}))}
                         onKeyDown={(e) => {e.key === 'Enter' && e.preventDefault()}}
+                        min= {0.00}
                         type="number"
-                        min= {1}
+                        useReactBTFormControl = {true}
                         required
                       />
                       <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>

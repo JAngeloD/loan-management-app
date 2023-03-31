@@ -78,7 +78,8 @@ export function getBorrowerPersonalInfo(rowdata: BorrowerOverview): PersonalInfo
     province: "what",
     postalCode: "123 456",
     phoneNumber: "403-292-2902",
-    email: "test"
+    email: "test",
+    comments: "test comment"
   })
 }
 
@@ -86,14 +87,14 @@ export function getBorrowerLoanInfo(rowdata: BorrowerOverview): LoanInfo {
   // ... Pass rowdata to db to retrieve borrower info
   return ({
     loanid: "1",
-    principal: "69",
-    interest: "69",
-    term: "69",
+    principal: 69,
+    interest: 69,
+    term: 69,
     paymentperperiod: "69",
     startdate: "69",
     frequency: "69",
     commissioner: "69",
-    commissioninterest: "69"
+    commissioninterest: 69
   })
 }
 

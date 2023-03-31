@@ -5,7 +5,7 @@ import DebouncedInput from './table/DebouncedInput'
 
 import * as db from '../../dbaccess/BorrowerPageUtils'
 
-import { PersonalInfo, LoanInfo, PaymentInfo } from '../../dbaccess/Interfaces/Interfaces';
+import { PersonalInfo, LoanInfo, PaymentInfo, paymentInfoDefaults } from '../../dbaccess/Interfaces/Interfaces';
 import { BorrowerOverview } from '../../dbaccess/DashboardUtils';
 
 interface ReactTableProps {
@@ -24,18 +24,11 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
   let personalInfo: PersonalInfo = db.getBorrowerPersonalInfo(borrowerRowdata)
   let loanInfo: LoanInfo = db.getBorrowerLoanInfo(borrowerRowdata)
 
-  //Handles validation for form in modal popup
-  const defaultPaymentInfo = {
-    paymentID: "1",
-    paymentdate: new Date().toISOString().split('T')[0],
-    paymentval: 0,
-    paymentstatus: false,
-  }
   const [validated, setValidated] = useState(false); // Result when adding or editing payments
   const [intent, setIntent] = useState<Action>(); // Stores user intent when altering payments
   const [show, setShow] = useState(false); // Hooks for handling modal viewing
-  const [paymentRowdata, setPaymentRowdata] = useState<PaymentInfo>(defaultPaymentInfo); // Stores row data from payment table
-  const [formData, setFormData] = useState<PaymentInfo>(defaultPaymentInfo);
+  const [paymentRowdata, setPaymentRowdata] = useState<PaymentInfo>(paymentInfoDefaults); // Stores row data from payment table
+  const [formData, setFormData] = useState<PaymentInfo>(paymentInfoDefaults);
 
   const handleShow = (paymentRowdata: any) => {
     if (paymentRowdata !== null) {
@@ -44,7 +37,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
       setFormData(paymentRowdata.original)
     }
     else {
-      setPaymentRowdata(defaultPaymentInfo);
+      setPaymentRowdata(paymentInfoDefaults);
       setIntent(Action.add)
     }
 
@@ -53,8 +46,8 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
   }
 
   const handleClose = () => {
-    setPaymentRowdata(defaultPaymentInfo)
-    setFormData(defaultPaymentInfo)
+    setPaymentRowdata(paymentInfoDefaults)
+    setFormData(paymentInfoDefaults)
     setShow(false)
   }
 
@@ -83,7 +76,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
       setShow(false);
     }
 
-    setFormData(defaultPaymentInfo)
+    setFormData(paymentInfoDefaults)
   };
 
   return (
@@ -120,9 +113,9 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                 <h3 className="text-right">Loan Info</h3>
               </div>
               <div className="row mt-2">
-                <div className="col-md-3"><label className="labels">Principal</label><input type="text" className="form-control" placeholder={loanInfo.principal} disabled /></div>
-                <div className="col-md-3"><label className="labels">Interest (%)</label><input type="text" className="form-control" placeholder={loanInfo.interest} disabled /></div>
-                <div className="col-md-3"><label className="labels">Term</label><input type="text" className="form-control" placeholder={loanInfo.term} disabled /></div>
+                <div className="col-md-3"><label className="labels">Principal</label><input type="text" className="form-control" placeholder={loanInfo.principal.toString()} disabled /></div>
+                <div className="col-md-3"><label className="labels">Interest (%)</label><input type="text" className="form-control" placeholder={loanInfo.interest.toString()} disabled /></div>
+                <div className="col-md-3"><label className="labels">Term</label><input type="text" className="form-control" placeholder={loanInfo.term.toString()} disabled /></div>
                 <div className="col-md-3"><label className="labels">P.P.P</label><input type="text" className="form-control" placeholder={loanInfo.paymentperperiod} disabled /></div>
               </div>
               <div className="row mt-2">
@@ -131,7 +124,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
               </div>
               <div className="row mt-2">
                 <div className="col-md-6"><label className="labels">Commissioner</label><input type="text" className="form-control" placeholder={loanInfo.commissioner} disabled /></div>
-                <div className="col-md-6"><label className="labels">Commission Interest (%)</label><input type="text" className="form-control" placeholder={loanInfo.interest} disabled /></div>
+                <div className="col-md-6"><label className="labels">Commission Interest (%)</label><input type="text" className="form-control" placeholder={loanInfo.interest.toString()} disabled /></div>
               </div>
               <div className="mt-5"><button className="btn btn-primary profile-button" type="button">Save Borrower Info</button></div>
             </div>
@@ -167,7 +160,6 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                         onChange={(e) => setFormData(formData => ({ ...formData, paymentdate: e.toString() }))}
                         onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                         type="date"
-                        useReactBTFormControl={true}
                         required
                       />
                       <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
@@ -182,7 +174,6 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                         onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                         min={0.00}
                         type="number"
-                        useReactBTFormControl={true}
                         required
                       />
                       <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>

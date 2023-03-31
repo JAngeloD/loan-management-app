@@ -1,14 +1,14 @@
 import React from 'react';
 import { Form, FormControlProps } from 'react-bootstrap'
 
-interface Props extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'number' | 'size'> {
+interface Props extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'number' | 'size'>, Pick<FormControlProps, "as"> {
   value: string | number;
   onChange: (val: string | number) => void;
   debounceTime?: number;
-  useReactBTFormControl?: boolean
+  useHTMLInput?: boolean
 }
 
-const DebouncedInput = ({ value: initialValue, onChange, debounceTime = 300, useReactBTFormControl = false, ...props }: Props) => {
+const DebouncedInput = ({ value: initialValue, onChange, debounceTime = 300, useHTMLInput = false, ...props }: Props) => {
   const [value, setValue] = React.useState(initialValue);
 
   // setValue if any initialValue changes
@@ -28,9 +28,9 @@ const DebouncedInput = ({ value: initialValue, onChange, debounceTime = 300, use
   }, [value, onChange, debounceTime]);
 
   return (
-    useReactBTFormControl
-    ? <Form.Control {...props} defaultValue={value} onChange={(e) => setValue(e.target.value)}/>
-    : <input {...props} defaultValue={value} onChange={(e) => setValue(e.target.value)} />
+    useHTMLInput
+    ? <input {...props} defaultValue={value} onChange={(e) => setValue(e.target.value)} />
+    : <Form.Control {...props} defaultValue={value} onChange={(e) => setValue(e.target.value)}/>
   )
 };
 

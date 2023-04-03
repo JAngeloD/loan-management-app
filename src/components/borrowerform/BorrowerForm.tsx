@@ -1,12 +1,22 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap';
 import { PersonalInfo, personalInfoDefaults, LoanInfo, loanInfoDefaults } from '../../dbaccess/Interfaces/Interfaces';
-import DebouncedInput from '../generic/table/DebouncedInput';
 
 export default function BorrowerForm() {
   const [validated, setValidated] = useState(false)
   const [personalData, setPersonalData] = useState<PersonalInfo>(personalInfoDefaults)
   const [loanData, setLoanData] = useState<LoanInfo>(loanInfoDefaults)
+
+  const handleFormChange = (event: any) => {
+    const namePair = event.target.name.split("_")
+
+    if (namePair[0] === "personal") {
+      setPersonalData(personalData => ({ ...personalData, [namePair[1]]: event.target.value}))
+    }
+    else if (namePair[0] === "loan") {
+      setLoanData(loanData => ({ ...loanData, [namePair[1]]: event.target.value}))
+    }
+  }
 
   const handleSubmit = (event: any) => {
     const form = event.currentTarget;
@@ -37,9 +47,10 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-6" >
               <Form.Label className="fw-semibold">First Name</Form.Label>
-              <DebouncedInput
-                value={personalData.firstName}
-                onChange={(e) => setPersonalData(personalData => ({ ...personalData, firstName: e.toString()}))}
+              <Form.Control
+                name="personal_firstName"
+                defaultValue={personalData.firstName}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                 type="text"
                 required
@@ -50,9 +61,10 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-6" >
               <Form.Label className="fw-semibold">Last Name</Form.Label>
-              <DebouncedInput
-                value={personalData.lastName}
-                onChange={(e) => setPersonalData(personalData => ({ ...personalData, lastName: e.toString()}))}
+              <Form.Control
+                name="personal_lastName"
+                defaultValue={personalData.lastName}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                 type="text"
                 required
@@ -63,9 +75,10 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-12" >
               <Form.Label className="fw-semibold">Address</Form.Label>
-              <DebouncedInput
-                value={personalData.address}
-                onChange={(e) => setPersonalData(personalData => ({ ...personalData, address: e.toString()}))}
+              <Form.Control
+                name="personal_address"
+                defaultValue={personalData.address}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                 type="text"
                 required
@@ -76,9 +89,10 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-4" >
               <Form.Label className="fw-semibold">Province</Form.Label>
-              <DebouncedInput
-                value={personalData.province}
-                onChange={(e) => setPersonalData(personalData => ({ ...personalData, province: e.toString()}))}
+              <Form.Control
+                name="personal_province"
+                defaultValue={personalData.province}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                 type="text"
                 required
@@ -89,9 +103,10 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-4" >
               <Form.Label className="fw-semibold">Postal Code</Form.Label>
-              <DebouncedInput
-                value={personalData.postalCode}
-                onChange={(e) => setPersonalData(personalData => ({ ...personalData, postalCode: e.toString()}))}
+              <Form.Control
+                name="personal_postalCode"
+                defaultValue={personalData.postalCode}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                 type="text"
                 required
@@ -102,10 +117,10 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-4" >
               <Form.Label className="fw-semibold">Apt. #</Form.Label>
-              <DebouncedInput
+              <Form.Control
                 disabled
-                value={""}
-                onChange={(e) => { }}
+                defaultValue={""}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                 type="text"
                 required
@@ -116,11 +131,12 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-6" >
               <Form.Label className="fw-semibold">Phone Number</Form.Label>
-              <DebouncedInput
-                value={personalData.phoneNumber}
-                onChange={(e) => setPersonalData(personalData => ({ ...personalData, phoneNumber: e.toString()}))}
+              <Form.Control
+                name="personal_phoneNumber"
+                defaultValue={personalData.phoneNumber}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
-                type="phoneNumber"
+                type="Phone"
                 required
               />
               <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
@@ -129,9 +145,10 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-6" >
               <Form.Label className="fw-semibold">Email</Form.Label>
-              <DebouncedInput
-                value={personalData.email}
-                onChange={(e) => setPersonalData(personalData => ({ ...personalData, email: e.toString()}))}
+              <Form.Control
+                name="personal_email"
+                defaultValue={personalData.email}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                 type="email"
                 required
@@ -147,9 +164,10 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-4" >
               <Form.Label className="fw-semibold">Loan Amount</Form.Label>
-              <DebouncedInput
-                value={""}
-                onChange={(e) => setLoanData(loanData => ({ ...loanData, principal: parseFloat(e.toString())}))}
+              <Form.Control
+                name="loan_principal"
+                defaultValue={""}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                 type="number"
                 required
@@ -160,9 +178,10 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-4" >
               <Form.Label className="fw-semibold">Interest</Form.Label>
-              <DebouncedInput
-                value={""}
-                onChange={(e) => setLoanData(loanData => ({ ...loanData, interest: parseFloat(e.toString())}))}
+              <Form.Control
+                name="loan_interest"
+                defaultValue={""}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                 type="number"
                 min={0.00}
@@ -176,9 +195,10 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-4" >
               <Form.Label className="fw-semibold">Term</Form.Label>
-              <DebouncedInput
-                value={""}
-                onChange={(e) => setLoanData(loanData => ({ ...loanData, term: parseInt(e.toString())}))}
+              <Form.Control
+                name="loan_term"
+                defaultValue={""}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                 type="number"
                 min={1}
@@ -190,9 +210,10 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-6" >
               <Form.Label className="fw-semibold">Starting date</Form.Label>
-              <DebouncedInput
-                value={""}
-                onChange={(e) => setLoanData(loanData => ({ ...loanData, startdate: e.toString()}))}
+              <Form.Control
+                name="loan_startdate"
+                defaultValue={""}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                 type="date"
                 required
@@ -204,15 +225,16 @@ export default function BorrowerForm() {
             <Form.Group className="col-md-6">
               <Form.Label className="fw-semibold">Frequency</Form.Label>
               <Form.Select className="col-md-6"
+                name="loan_frequency"
                 defaultValue={""}
-                onChange={(e) => setLoanData(loanData => ({ ...loanData, frequency: e.toString()}))}
+                onChange={handleFormChange}
                 required>
-                <option disabled value="">Select</option>
-                <option value="monthly">Monthly</option>
-                <option value="biweekly">Bi-Weekly</option>
-                <option value="biweekly">Weekly</option>
-                <option value="onetime">One-time</option>
-                <option value="balloon">One-time (balloon)</option>
+                <option disabled defaultValue="">Select</option>
+                <option defaultValue="monthly">Monthly</option>
+                <option defaultValue="biweekly">Bi-Weekly</option>
+                <option defaultValue="biweekly">Weekly</option>
+                <option defaultValue="onetime">One-time</option>
+                <option defaultValue="balloon">One-time (balloon)</option>
               </Form.Select>
 
               <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
@@ -221,9 +243,10 @@ export default function BorrowerForm() {
 
             <Form.Group className="col-md-12 mt-4 mb-2" >
               <Form.Label className="fw-semibold">Remarks</Form.Label>
-              <DebouncedInput
-                value={personalData.comments}
-                onChange={(e) => setPersonalData(personalData => ({ ...personalData, comments: e.toString()}))}
+              <Form.Control
+                name="personal_comments"
+                defaultValue={personalData.comments}
+                onChange={handleFormChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                 as="textarea"
                 style={{ height: '200px' }}

@@ -5,10 +5,9 @@ interface Props extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onCha
   value: string | number;
   onChange: (val: string | number) => void;
   debounceTime?: number;
-  useHTMLInput?: boolean
 }
 
-const DebouncedInput = ({ value: initialValue, onChange, debounceTime = 300, useHTMLInput = false, ...props }: Props) => {
+const DebouncedInput = ({ value: initialValue, onChange, debounceTime = 300, ...props }: Props) => {
   const [value, setValue] = React.useState(initialValue);
 
   // setValue if any initialValue changes
@@ -27,11 +26,7 @@ const DebouncedInput = ({ value: initialValue, onChange, debounceTime = 300, use
     };
   }, [value, onChange, debounceTime]);
 
-  return (
-    useHTMLInput
-    ? <input {...props} defaultValue={value} onChange={(e) => setValue(e.target.value)} />
-    : <Form.Control {...props} defaultValue={value} onChange={(e) => setValue(e.target.value)}/>
-  )
+  return (<Form.Control {...props} defaultValue={value} onChange={(e) => {setValue(e.target.value)}}/>)
 };
 
 export default DebouncedInput

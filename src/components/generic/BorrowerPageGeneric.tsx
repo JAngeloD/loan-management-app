@@ -51,6 +51,14 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
     setShow(false)
   }
 
+  const handleChange = (event: any) => {
+    const name = event.target.name
+    let val = event.target.value
+    if (event.target.type === "checkbox") val = event.target.checked
+
+    setFormData(formData => ({ ...formData, [name]: val }))
+  }
+
   const handleSubmit = (event: any) => {
     const form = event.currentTarget;
     event.preventDefault();
@@ -155,9 +163,10 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                   <Modal.Body>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Payment Date</Form.Label>
-                      <DebouncedInput
-                        value={new Date(paymentRowdata.paymentdate).toISOString().substring(0, 10)}
-                        onChange={(e) => setFormData(formData => ({ ...formData, paymentdate: e.toString() }))}
+                      <Form.Control
+                        name="paymentdate"
+                        defaultValue={new Date(paymentRowdata.paymentdate).toISOString().substring(0, 10)}
+                        onChange={handleChange}
                         onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                         type="date"
                         required
@@ -168,9 +177,10 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                       <Form.Label>Payment Amount</Form.Label>
-                      <DebouncedInput
-                        value={paymentRowdata.paymentval}
-                        onChange={(e) => setFormData(formData => ({ ...formData, paymentval: parseFloat(e.toString()) }))}
+                      <Form.Control
+                        name="paymentval"
+                        defaultValue={paymentRowdata.paymentval}
+                        onChange={handleChange}
                         onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                         min={0.00}
                         type="number"
@@ -182,9 +192,10 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
 
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
                       <Form.Check defaultChecked={(paymentRowdata.paymentstatus) ? true : false}
+                        name="paymentstatus"
                         type="checkbox"
                         label="Paid"
-                        onChange={(e) => setFormData(formData => ({ ...formData, paymentstatus: e.target.checked }))}
+                        onChange={handleChange}
                         onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
                       />
                     </Form.Group>

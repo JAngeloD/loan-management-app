@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap';
 import { PersonalInfo, personalInfoDefaults, LoanInfo, loanInfoDefaults } from '../../dbaccess/Interfaces/Interfaces';
-
+import { AddBorrower } from '../../dbaccess/BorrowerFormUtils'
 export default function BorrowerForm() {
   const [validated, setValidated] = useState(false)
   const [personalData, setPersonalData] = useState<PersonalInfo>(personalInfoDefaults)
@@ -29,13 +29,15 @@ export default function BorrowerForm() {
       return
     }
 
+    AddBorrower(personalData, loanData)
+
     setValidated(false);
   };
 
   return (
     <div className="container flex-shrink-1 bg-dark-subtle p-4 ">
       <div className="card shadow border-0 mb-7 p-4 mt-5">
-        <button onClick={()=> {console.log(personalData)}}>TEST</button>
+        <button onClick={()=> {console.log(loanData)}}>TEST</button>
         <div className="card-header bg-dark-subtle">
           <h5 className="mb-1">Add Borrower</h5>
         </div>
@@ -226,7 +228,7 @@ export default function BorrowerForm() {
               <Form.Label className="fw-semibold">Frequency</Form.Label>
               <Form.Select className="col-md-6"
                 name="loan_frequency"
-                defaultValue={""}
+                defaultValue={"Select"}
                 onChange={handleFormChange}
                 required>
                 <option disabled defaultValue="">Select</option>

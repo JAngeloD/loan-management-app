@@ -24,31 +24,6 @@ export const personalInfoDefaults: PersonalInfo = {
   email: "",
   comments: ""
 }
-
-export interface LoanInfo {
-  loanid: string;
-  principal: number;
-  interest: number;
-  term: number;
-  paymentperperiod: string;
-  startdate: string;
-  frequency: string;
-  commissioner: string;
-  commissioninterest: number;
-}
-
-export const loanInfoDefaults: LoanInfo = {
-  loanid: "",
-  principal: 0,
-  interest: 0,
-  term: 0,
-  paymentperperiod: "",
-  startdate: "",
-  frequency: "",
-  commissioner: "",
-  commissioninterest: 0
-}
-
 export interface PaymentInfo {
   paymentID: string;
   paymentdate: string;
@@ -62,6 +37,33 @@ export const paymentInfoDefaults: PaymentInfo = {
   paymentval: 0,
   paymentstatus: false
 }
+export interface LoanInfo {
+  loanid: string;
+  principal: number;
+  interest: number;
+  term: number;
+  paymentperperiod: number;
+  startdate: string;
+  frequency: string;
+  commissioner: string;
+  commissioninterest: number;
+  payments: PaymentInfo[];
+}
+
+export const loanInfoDefaults: LoanInfo = {
+  loanid: "",
+  principal: 0,
+  interest: 0,
+  term: 0,
+  paymentperperiod: 0,
+  startdate: "",
+  frequency: "",
+  commissioner: "",
+  commissioninterest: 0,
+  payments: [paymentInfoDefaults]
+}
+
+export type FullBorrowerInfo = PersonalInfo & LoanInfo
 
 export const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',

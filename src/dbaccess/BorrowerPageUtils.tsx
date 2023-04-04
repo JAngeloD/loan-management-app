@@ -5,9 +5,9 @@
 */
 
 import React from 'react'
-import { PersonalInfo, LoanInfo, PaymentInfo, currencyFormatter} from './Interfaces/Interfaces';
+import { PersonalInfo, LoanInfo, PaymentInfo, FullBorrowerInfo, currencyFormatter} from './Interfaces/Interfaces';
 import { ColumnDef } from '@tanstack/react-table';
-import { BorrowerOverview } from './DashboardUtils';
+import { GenerateBorrower } from './testingUtils/TestDataGenerator';
 const db = require('./Connection')
 
 export function getBorrowerPaymentsData() {
@@ -67,7 +67,7 @@ export function getBorrowerPaymentsColumns() {
   )
 }
 
-export function getBorrowerPersonalInfo(rowdata: BorrowerOverview): PersonalInfo {
+export function getBorrowerPersonalInfo(rowdata: FullBorrowerInfo): PersonalInfo {
   // ... Pass rowdata to db to retrieve borrower info
 
   return ({
@@ -83,19 +83,10 @@ export function getBorrowerPersonalInfo(rowdata: BorrowerOverview): PersonalInfo
   })
 }
 
-export function getBorrowerLoanInfo(rowdata: BorrowerOverview): LoanInfo {
+export function getBorrowerLoanInfo(rowdata: FullBorrowerInfo): FullBorrowerInfo {
   // ... Pass rowdata to db to retrieve borrower info
-  return ({
-    loanid: "1",
-    principal: 69,
-    interest: 69,
-    term: 69,
-    paymentperperiod: "69",
-    startdate: "69",
-    frequency: "69",
-    commissioner: "69",
-    commissioninterest: 69
-  })
+  const testdata = GenerateBorrower(1)[0]
+  return (testdata)
 }
 
 export function addPaymentToBorrower() {

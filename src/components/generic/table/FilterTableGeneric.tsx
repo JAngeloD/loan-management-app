@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import DebouncedInput from './DebouncedInput'
 import PaginationInputs from './PaginationInputs'
-import { getCoreRowModel, useReactTable, flexRender, getPaginationRowModel, FilterFn, getFilteredRowModel, getSortedRowModel, SortingState, Pagination } from '@tanstack/react-table';
+import { getCoreRowModel, useReactTable, flexRender, getPaginationRowModel, FilterFn, getFilteredRowModel, getSortedRowModel, SortingState } from '@tanstack/react-table';
 import type { ColumnDef, ColumnSort } from '@tanstack/react-table';
 import { filterFns } from './FuzzyFilter'
 

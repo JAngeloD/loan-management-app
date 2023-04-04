@@ -10,8 +10,9 @@
 
 import React from 'react'
 
-import { PersonalInfo, LoanInfo } from './Interfaces/Interfaces';
+import { FullBorrowerInfo, currencyFormatter } from './Interfaces/Interfaces';
 import { ColumnDef } from '@tanstack/react-table';
+import { GenerateBorrower } from './testingUtils/TestDataGenerator'
 
 const db = require('./Connection')
 
@@ -128,82 +129,43 @@ export function getLastPaymentAmount() {
 *************************************************************************************************/
 
 
-export interface BorrowerOverview {
-  loanid: string;
-  name: string;
-  nextpaymentdate: string;
-  paymentval: string;
-  remainingterm: number;
-}
 
 export function getBorrowerOverViewListData() {
   const data = React.useMemo(
-    () => [
-      {
-        loanid: "1",
-        name: "Filbo",
-        nextpaymentdate: "2022-03-27",
-        paymentval: "$299.00",
-        remainingterm: 12
-      },
-      {
-        loanid: "2",
-        name: "Sans",
-        nextpaymentdate: "2022-05-14",
-        paymentval: "$994.00",
-        remainingterm: 3
-      },
-      {
-        loanid: "3",
-        name: "Beffica",
-        nextpaymentdate: "2023-03-14",
-        paymentval: "$939.00",
-        remainingterm: 22
-      },
-      {
-        loanid: "4",
-        name: "John",
-        nextpaymentdate: "2022-10-21",
-        paymentval: "$979.00",
-        remainingterm: 1
-      }
-    ],
+    () => GenerateBorrower(10),
     []
   )
-
   return data
 }
 
 export function getBorrowerOverViewListColumns() {
-  const columns = React.useMemo<ColumnDef<BorrowerOverview>[]>(
+  const columns = React.useMemo<ColumnDef<FullBorrowerInfo>[]>(
     () => [
       {
-        header: 'Loan ID',
+        header: 'Full Name',
         cell: (row) => row.renderValue(),
-        accessorKey: 'loanid', // accessor is the "key" in the data
-      },
-      {
-        header: 'Name',
-        cell: (row) => row.renderValue(),
-        accessorKey: 'name', // accessor is the "key" in the data
+        accessorFn: (row) => {
+          return (`${row.firstName} ${row.lastName}`)
+        },
       },
       {
         header: 'Next Payment Date',
-        sortType: (a: BorrowerOverview, b: BorrowerOverview) => {
-          return new Date(a.nextpaymentdate).getTime() - new Date(b.nextpaymentdate).getTime()
+        sortType: (a: FullBorrowerInfo, b: FullBorrowerInfo) => {
+          return new Date(a.payments[a.payments.length - 1].paymentdate).getTime() - new Date(b.payments[b.payments.length - 1].paymentdate).getTime()
         },
         cell: (row) => row.renderValue(),
-        accessorKey: 'nextpaymentdate',
+        accessorKey: "nextpaymentdate",
+        accessorFn: (row) => {
+          console.log(row)
+          return (row.payments[row.payments.length - 1].paymentdate)
+        },
       },
       {
-        header: 'Amount expected',
+        header: 'Amount',
         cell: (row) => row.renderValue(),
-        accessorKey: 'paymentval',
-      },
-      {
-        header: 'Remaining Term',
-        cell: (row) => row.renderValue(),
-        accessorKey: 'remainingterm',
+        accessorFn: (row) => {
+          return (currencyFormatter.format(row.payments[row.payments.length - 1].paymentval))
+        }
       },
     ],
     []

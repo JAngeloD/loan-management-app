@@ -5,11 +5,10 @@ import DebouncedInput from './table/DebouncedInput'
 
 import * as db from '../../dbaccess/BorrowerPageUtils'
 
-import { PersonalInfo, LoanInfo, PaymentInfo, paymentInfoDefaults } from '../../dbaccess/Interfaces/Interfaces';
-import { BorrowerOverview } from '../../dbaccess/DashboardUtils';
+import { PersonalInfo, LoanInfo, PaymentInfo, paymentInfoDefaults, FullBorrowerInfo } from '../../dbaccess/Interfaces/Interfaces';
 
 interface ReactTableProps {
-  borrowerRowdata: BorrowerOverview;
+  borrowerRowdata: FullBorrowerInfo;
   handleDashboardState: (newState: string, borrowerRowdata: object) => any
 }
 
@@ -124,7 +123,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                 <div className="col-md-3"><label className="labels">Principal</label><input type="text" className="form-control" placeholder={loanInfo.principal.toString()} disabled /></div>
                 <div className="col-md-3"><label className="labels">Interest (%)</label><input type="text" className="form-control" placeholder={loanInfo.interest.toString()} disabled /></div>
                 <div className="col-md-3"><label className="labels">Term</label><input type="text" className="form-control" placeholder={loanInfo.term.toString()} disabled /></div>
-                <div className="col-md-3"><label className="labels">P.P.P</label><input type="text" className="form-control" placeholder={loanInfo.paymentperperiod} disabled /></div>
+                <div className="col-md-3"><label className="labels">P.P.P</label><input type="text" className="form-control" placeholder={loanInfo.paymentperperiod.toString()} disabled /></div>
               </div>
               <div className="row mt-2">
                 <div className="col-md-6"><label className="labels">Start Date</label><input type="text" className="form-control" placeholder={loanInfo.startdate} disabled /></div>
@@ -204,8 +203,11 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                     <Button variant="secondary" onClick={handleClose}>
                       Close
                     </Button>
+                    <Button variant='danger'>
+                      Delete Payment
+                    </Button>
                     <Button variant="primary" type="submit">
-                      Save Changes
+                      Save Payment
                     </Button>
                   </Modal.Footer>
                 </Form>

@@ -19,22 +19,22 @@ export function getAllArchivedPaymentsData() {
     () => [
       {
         paymentdate: "2022-03-15",
-        fullname: "Filbo",
+        fullname: "Filbo Fiddlepie",
         paymentval: "$250.00",
       },
       {
         paymentdate: "2022-04-15",
-        fullname: "Filbo",
+        fullname: "Filbo Fiddlepie",
         paymentval: "$250.00",
       },
       {
         paymentdate: "2022-05-15",
-        fullname: "Filbo",
+        fullname: "Filbo Fiddlepie",
         paymentval: "$250.00",
       },
       {
         paymentdate: "2022-06-15",
-        fullname: "Filbo",
+        fullname: "Filbo Fiddlepie",
         paymentval: "$250.00",
       }
     ],

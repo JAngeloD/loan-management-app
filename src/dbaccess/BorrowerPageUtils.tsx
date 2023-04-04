@@ -10,34 +10,9 @@ import { ColumnDef } from '@tanstack/react-table';
 import { GenerateBorrower } from './testingUtils/TestDataGenerator';
 const db = require('./Connection')
 
-export function getBorrowerPaymentsData() {
+export function getBorrowerPaymentsData(borrowerRowdata: FullBorrowerInfo) {
   return React.useMemo<PaymentInfo[]>(
-    () => [
-      {
-        paymentID: "1",
-        paymentdate: "2022-03-15",
-        paymentval: 250.00,
-        paymentstatus: true
-      },
-      {
-        paymentID: "2",
-        paymentdate: "2022-04-15",
-        paymentval: 250.00,
-        paymentstatus: false
-      },
-      {
-        paymentID: "3",
-        paymentdate: "2022-05-15",
-        paymentval: 250.00,
-        paymentstatus: false
-      },
-      {
-        paymentID: "4",
-        paymentdate: "2022-06-15",
-        paymentval: 250.00,
-        paymentstatus: false
-      }
-    ],
+    () => borrowerRowdata.payments,
     []
   )
 }
@@ -84,9 +59,7 @@ export function getBorrowerPersonalInfo(rowdata: FullBorrowerInfo): PersonalInfo
 }
 
 export function getBorrowerLoanInfo(rowdata: FullBorrowerInfo): FullBorrowerInfo {
-  // ... Pass rowdata to db to retrieve borrower info
-  const testdata = GenerateBorrower(1)[0]
-  return (testdata)
+  return (rowdata)
 }
 
 export function addPaymentToBorrower() {

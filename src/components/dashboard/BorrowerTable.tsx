@@ -15,7 +15,6 @@ interface Props {
 export default function BorrowerTable({ handleDashboardState }: Props) {
 
   const viewBorrower = (row: any) => {
-    //console.log(JSON.stringify(row.original))
     handleDashboardState("viewborrower", row.original)
   }
 

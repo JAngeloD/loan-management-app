@@ -9,7 +9,7 @@ import { PersonalInfo, LoanInfo, PaymentInfo, paymentInfoDefaults, FullBorrowerI
 
 interface ReactTableProps {
   borrowerRowdata: FullBorrowerInfo;
-  handleDashboardState: (newState: string, borrowerRowdata: object) => any
+  handleDashboardState: (newState: string, borrowerRowdata: FullBorrowerInfo) => any
 }
 
 enum Action {
@@ -18,10 +18,6 @@ enum Action {
 }
 
 export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardState }: ReactTableProps) {
-
-  //Stores data objects for the "Personal" and "Loan" sections in the page
-  let personalInfo: PersonalInfo = db.getBorrowerPersonalInfo(borrowerRowdata)
-  let loanInfo: LoanInfo = db.getBorrowerLoanInfo(borrowerRowdata)
 
   const [validated, setValidated] = useState(false); // Result when adding or editing payments
   const [intent, setIntent] = useState<Action>(); // Stores user intent when altering payments
@@ -99,39 +95,39 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                 <h3 className="text-right">Personal Info</h3>
               </div>
               <div className="row mt-2">
-                <div className="col-md-6"><label className="labels">First Name</label><input type="text" className="form-control" placeholder={personalInfo.firstName} /></div>
-                <div className="col-md-6"><label className="labels">Last Name </label><input type="text" className="form-control" placeholder={personalInfo.lastName} /></div>
+                <div className="col-md-6"><label className="labels">First Name</label><input type="text" className="form-control" placeholder={borrowerRowdata.firstName} /></div>
+                <div className="col-md-6"><label className="labels">Last Name </label><input type="text" className="form-control" placeholder={borrowerRowdata.lastName} /></div>
               </div>
               <div className="row mt-2">
-                <div className="col-md-12"><label className="labels">Address</label><input type="text" className="form-control" placeholder={personalInfo.address} /></div>
+                <div className="col-md-12"><label className="labels">Address</label><input type="text" className="form-control" placeholder={borrowerRowdata.address} /></div>
               </div>
               <div className="row mt-2">
-                <div className="col-md-4"><label className="labels">Province</label><input type="text" className="form-control" placeholder={personalInfo.province} /></div>
-                <div className="col-md-4"><label className="labels">Postal Code</label><input type="text" className="form-control" placeholder={personalInfo.postalCode} /></div>
-                <div className="col-md-4"><label className="labels">Apt. #</label><input type="text" className="form-control" placeholder={personalInfo.address} /></div>
+                <div className="col-md-4"><label className="labels">Province</label><input type="text" className="form-control" placeholder={borrowerRowdata.province} /></div>
+                <div className="col-md-4"><label className="labels">Postal Code</label><input type="text" className="form-control" placeholder={borrowerRowdata.postalCode} /></div>
+                <div className="col-md-4"><label className="labels">Apt. #</label><input type="text" className="form-control" placeholder={borrowerRowdata.address} /></div>
               </div>
 
               <div className="row mt-2">
-                <div className="col-md-6"><label className="labels">Phone Number</label><input type="text" className="form-control" placeholder={personalInfo.phoneNumber} /></div>
-                <div className="col-md-6"><label className="labels">Email</label><input type="text" className="form-control" placeholder={personalInfo.email} /></div>
+                <div className="col-md-6"><label className="labels">Phone Number</label><input type="text" className="form-control" placeholder={borrowerRowdata.phoneNumber} /></div>
+                <div className="col-md-6"><label className="labels">Email</label><input type="text" className="form-control" placeholder={borrowerRowdata.email} /></div>
               </div>
               <hr style={{ borderTop: "3px solid" }} />
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h3 className="text-right">Loan Info</h3>
               </div>
               <div className="row mt-2">
-                <div className="col-md-3"><label className="labels">Principal</label><input type="text" className="form-control" placeholder={loanInfo.principal.toString()} disabled /></div>
-                <div className="col-md-3"><label className="labels">Interest (%)</label><input type="text" className="form-control" placeholder={loanInfo.interest.toString()} disabled /></div>
-                <div className="col-md-3"><label className="labels">Term</label><input type="text" className="form-control" placeholder={loanInfo.term.toString()} disabled /></div>
-                <div className="col-md-3"><label className="labels">P.P.P</label><input type="text" className="form-control" placeholder={loanInfo.paymentperperiod.toString()} disabled /></div>
+                <div className="col-md-3"><label className="labels">Principal</label><input type="text" className="form-control" placeholder={borrowerRowdata.principal.toString()} disabled /></div>
+                <div className="col-md-3"><label className="labels">Interest (%)</label><input type="text" className="form-control" placeholder={borrowerRowdata.interest.toString()} disabled /></div>
+                <div className="col-md-3"><label className="labels">Term</label><input type="text" className="form-control" placeholder={borrowerRowdata.term.toString()} disabled /></div>
+                <div className="col-md-3"><label className="labels">P.P.P</label><input type="text" className="form-control" placeholder={borrowerRowdata.paymentperperiod.toString()} disabled /></div>
               </div>
               <div className="row mt-2">
-                <div className="col-md-6"><label className="labels">Start Date</label><input type="text" className="form-control" placeholder={loanInfo.startdate} disabled /></div>
-                <div className="col-md-6"><label className="labels">Frequency</label><input type="text" className="form-control" placeholder={loanInfo.frequency} disabled /></div>
+                <div className="col-md-6"><label className="labels">Start Date</label><input type="text" className="form-control" placeholder={borrowerRowdata.startdate} disabled /></div>
+                <div className="col-md-6"><label className="labels">Frequency</label><input type="text" className="form-control" placeholder={borrowerRowdata.frequency} disabled /></div>
               </div>
               <div className="row mt-2">
-                <div className="col-md-6"><label className="labels">Commissioner</label><input type="text" className="form-control" placeholder={loanInfo.commissioner} disabled /></div>
-                <div className="col-md-6"><label className="labels">Commission Interest (%)</label><input type="text" className="form-control" placeholder={loanInfo.interest.toString()} disabled /></div>
+                <div className="col-md-6"><label className="labels">Commissioner</label><input type="text" className="form-control" placeholder={borrowerRowdata.commissioner} disabled /></div>
+                <div className="col-md-6"><label className="labels">Commission Interest (%)</label><input type="text" className="form-control" placeholder={borrowerRowdata.interest.toString()} disabled /></div>
               </div>
               <div className="mt-5"><button className="btn btn-primary profile-button" type="button">Save Borrower Info</button></div>
             </div>
@@ -144,7 +140,13 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                 <Button variant="primary" onClick={() => { handleShow(null) }}>Add</Button>
               </div>
 
-              <FilterTableGeneric data={db.getBorrowerPaymentsData()} columns={db.getBorrowerPaymentsColumns()} cellClickFunction={handleShow} />
+              <FilterTableGeneric data={db.getBorrowerPaymentsData(borrowerRowdata)}
+                                  columns={db.getBorrowerPaymentsColumns()}
+                                  cellClickFunction={handleShow}
+                                  sortState={[{
+                                    id: "paymentdate",
+                                    desc: false
+                                  }]}/>
 
               <Modal
                 show={show}

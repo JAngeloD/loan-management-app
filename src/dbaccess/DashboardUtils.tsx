@@ -156,7 +156,6 @@ export function getBorrowerOverViewListColumns() {
         cell: (row) => row.renderValue(),
         accessorKey: "nextpaymentdate",
         accessorFn: (row) => {
-          console.log(row)
           return (row.payments[row.payments.length - 1].paymentdate)
         },
       },

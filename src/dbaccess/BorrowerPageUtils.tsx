@@ -7,7 +7,7 @@
 import React from 'react'
 import { PersonalInfo, LoanInfo, PaymentInfo, FullBorrowerInfo, currencyFormatter} from './Interfaces/Interfaces';
 import { ColumnDef } from '@tanstack/react-table';
-import { GenerateBorrower } from './testingUtils/TestDataGenerator';
+import { GenerateFullBorrowerInfo } from './testingUtils/TestDataGenerator';
 const db = require('./Connection')
 
 export function getBorrowerPaymentsData(borrowerRowdata: FullBorrowerInfo) {

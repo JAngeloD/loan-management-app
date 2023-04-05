@@ -6,38 +6,13 @@
 
 import React from 'react'
 import { ColumnDef } from '@tanstack/react-table';
+import { GenerateArchivedPayments, GeneratePayment } from './testingUtils/TestDataGenerator';
+import { PaymentInfo, PersonalInfo, ArchivedPayments } from './Interfaces/Interfaces';
 const db = require('./Connection')
-
-export interface ArchivedPayments {
-  paymentdate: string;
-  fullname: string;
-  paymentval: string;
-}
 
 export function getAllArchivedPaymentsData() {
   return React.useMemo<ArchivedPayments[]>(
-    () => [
-      {
-        paymentdate: "2022-03-15",
-        fullname: "Filbo Fiddlepie",
-        paymentval: "$250.00",
-      },
-      {
-        paymentdate: "2022-04-15",
-        fullname: "Filbo Fiddlepie",
-        paymentval: "$250.00",
-      },
-      {
-        paymentdate: "2022-05-15",
-        fullname: "Filbo Fiddlepie",
-        paymentval: "$250.00",
-      },
-      {
-        paymentdate: "2022-06-15",
-        fullname: "Filbo Fiddlepie",
-        paymentval: "$250.00",
-      }
-    ],
+    () => GenerateArchivedPayments(10),
     []
   )
 }
@@ -55,7 +30,9 @@ export function getAllArchivedPaymentsColumns() {
       {
         header: 'Borrower Name',
         cell: (row) => row.renderValue(),
-        accessorKey: 'fullname',
+        accessorFn: (row) => {
+          return (`${row.firstName} ${row.lastName}`)
+        },
       },
       {
         header: 'Payment Amount',

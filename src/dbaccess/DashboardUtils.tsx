@@ -12,7 +12,7 @@ import React from 'react'
 
 import { FullBorrowerInfo, currencyFormatter } from './Interfaces/Interfaces';
 import { ColumnDef } from '@tanstack/react-table';
-import { GenerateBorrower } from './testingUtils/TestDataGenerator'
+import { GenerateFullBorrowerInfo } from './testingUtils/TestDataGenerator'
 
 const db = require('./Connection')
 
@@ -132,7 +132,7 @@ export function getLastPaymentAmount() {
 
 export function getBorrowerOverViewListData() {
   const data = React.useMemo(
-    () => GenerateBorrower(10),
+    () => GenerateFullBorrowerInfo(10),
     []
   )
   return data

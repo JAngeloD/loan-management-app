@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap'
+import { PaymentInfo, paymentInfoDefaults, FullBorrowerInfo, } from '../../dbaccess/Interfaces/Interfaces';
 import FilterTableGeneric from './table/FilterTableGeneric'
-import DebouncedInput from './table/DebouncedInput'
+import { parentPageState } from '../App';
 
 import * as db from '../../dbaccess/BorrowerPageUtils'
 
-import { PersonalInfo, LoanInfo, PaymentInfo, paymentInfoDefaults, FullBorrowerInfo } from '../../dbaccess/Interfaces/Interfaces';
 
 interface ReactTableProps {
   borrowerRowdata: FullBorrowerInfo;
-  handleDashboardState: (newState: string, borrowerRowdata: FullBorrowerInfo) => any
+  handleDashboardState: (newState: parentPageState, borrowerRowdata: FullBorrowerInfo) => any
+  returnState?: parentPageState
 }
 
 enum Action {
@@ -17,7 +18,7 @@ enum Action {
   "edit"
 }
 
-export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardState }: ReactTableProps) {
+export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardState, returnState = parentPageState.dashboard }: ReactTableProps) {
 
   const [validated, setValidated] = useState(false); // Result when adding or editing payments
   const [intent, setIntent] = useState<Action>(); // Stores user intent when altering payments
@@ -85,7 +86,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
   return (
     <div className="card shadow border-0 ps-4 pe-4">
       <div className="rounded bg-white mt-5">
-        <button className="btn btn-primary p-2" onClick={() => { handleDashboardState("viewdashboard", null) }}>
+        <button className="btn btn-primary p-2" onClick={() => { handleDashboardState(returnState, null) }}>
           <i className="bi bi-arrow-90deg-left" /> Go Back
         </button>
         <div className="row">

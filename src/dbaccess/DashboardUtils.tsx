@@ -132,7 +132,7 @@ export function getLastPaymentAmount() {
 
 export function getBorrowerOverViewListData() {
   const data = React.useMemo(
-    () => GenerateFullBorrowerInfo(10),
+    () => GenerateFullBorrowerInfo(30),
     []
   )
   return data
@@ -156,7 +156,10 @@ export function getBorrowerOverViewListColumns() {
         cell: (row) => row.renderValue(),
         accessorKey: "nextpaymentdate",
         accessorFn: (row) => {
-          return (row.payments[row.payments.length - 1].paymentdate)
+          return row.payments.sort(function(a, b) {
+            return new Date(a.paymentdate).getTime() - new Date(b.paymentdate).getTime();
+          })[row.payments.length - 1].paymentdate
+          //TODO: Need to sort it based on payment status
         },
       },
       {
@@ -169,6 +172,5 @@ export function getBorrowerOverViewListColumns() {
     ],
     []
   )
-
   return columns
 }

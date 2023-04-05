@@ -12,7 +12,7 @@ const db = require('./Connection')
 
 export function getAllArchivedPaymentsData() {
   return React.useMemo<ArchivedPayments[]>(
-    () => GenerateArchivedPayments(10),
+    () => GenerateArchivedPayments(25),
     []
   )
 }

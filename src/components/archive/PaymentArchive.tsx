@@ -12,6 +12,10 @@ export default function PaymentArchive() {
         <div className="mt-4 p-2">
           <FilterTableGeneric data={db.getAllArchivedPaymentsData()}
                               columns={db.getAllArchivedPaymentsColumns()}
+                              sortState={[{
+                                id: "paymentdate",
+                                desc: false
+                              }]}
                               showGlobalFilter
           />
         </div>

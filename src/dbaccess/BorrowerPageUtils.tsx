@@ -42,26 +42,6 @@ export function getBorrowerPaymentsColumns() {
   )
 }
 
-export function getBorrowerPersonalInfo(rowdata: FullBorrowerInfo): PersonalInfo {
-  // ... Pass rowdata to db to retrieve borrower info
-
-  return ({
-    borrowerid: "1",
-    firstName: "Filbo",
-    lastName: "Fiddlepie",
-    address: "snaktooth island",
-    province: "what",
-    postalCode: "123 456",
-    phoneNumber: "403-292-2902",
-    email: "test",
-    comments: "test comment"
-  })
-}
-
-export function getBorrowerLoanInfo(rowdata: FullBorrowerInfo): FullBorrowerInfo {
-  return (rowdata)
-}
-
 export function addPaymentToBorrower() {
   console.log("added payment to borrower")
 }

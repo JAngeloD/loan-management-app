@@ -6,16 +6,18 @@
 import React from 'react'
 import { FilterTableGeneric } from '../generic/table/FilterTableGeneric'
 import * as db from '../../dbaccess/DashboardUtils'
+import { parentPageState } from '../App';
+import { FullBorrowerInfo } from '../../dbaccess/Interfaces/Interfaces';
 
 interface Props {
-  handleDashboardState: (params: string, row: object) => any;
+  handleBorrowerRowDataState: (newState: parentPageState, borrowerRowdata: FullBorrowerInfo) => any;
 }
 
 //Changes start to switch to the borrower info page with the row data passed in the params
-export default function BorrowerTable({ handleDashboardState }: Props) {
+export default function BorrowerTable({ handleBorrowerRowDataState }: Props) {
 
   const viewBorrower = (row: any) => {
-    handleDashboardState("viewborrower", row.original)
+    handleBorrowerRowDataState(parentPageState.borrowerdetails, row.original)
   }
 
   return (

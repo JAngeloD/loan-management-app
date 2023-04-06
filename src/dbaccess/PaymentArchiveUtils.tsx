@@ -6,26 +6,31 @@
 
 import React from 'react'
 import { ColumnDef } from '@tanstack/react-table';
-import { GenerateArchivedPayments, GeneratePayment } from './testingUtils/TestDataGenerator';
-import { PaymentInfo, PersonalInfo, ArchivedPayments } from './Interfaces/Interfaces';
+import { GenerateFullBorrowerInfo } from './testingUtils/TestDataGenerator';
+import { FullBorrowerInfo } from './Interfaces/Interfaces';
 const db = require('./Connection')
 
 export function getAllArchivedPaymentsData() {
-  return React.useMemo<ArchivedPayments[]>(
-    () => GenerateArchivedPayments(25),
+  return React.useMemo<FullBorrowerInfo[]>(
+    () => GenerateFullBorrowerInfo(25),
     []
   )
 }
 export function getAllArchivedPaymentsColumns() {
-  return React.useMemo<ColumnDef<ArchivedPayments>[]>(
+  return React.useMemo<ColumnDef<FullBorrowerInfo>[]>(
     () => [
       {
         header: 'Payment Date',
         cell: (row) => row.renderValue(),
         accessorKey: 'paymentdate',
-        sortType: (a: ArchivedPayments, b: ArchivedPayments) => {
-          return new Date(a.paymentdate).getTime() - new Date(b.paymentdate).getTime()
-        }
+        sortType: (a: FullBorrowerInfo, b: FullBorrowerInfo) => {
+          return new Date(a.payments[a.payments.length - 1].paymentdate).getTime() - new Date(b.payments[b.payments.length - 1].paymentdate).getTime()
+        },
+        accessorFn: (row) => {
+          return row.payments.sort(function(a, b) {
+            return new Date(a.paymentdate).getTime() - new Date(b.paymentdate).getTime();
+          })[row.payments.length - 1].paymentdate
+        },
       },
       {
         header: 'Borrower Name',

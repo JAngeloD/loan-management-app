@@ -16,6 +16,14 @@ export enum parentPageState {
   "settings"
 }
 
+export interface BorrowerPageProps {
+  handleBorrowerRowDataState: (newState: parentPageState, borrowerRowdata: FullBorrowerInfo) => any
+}
+
+export interface ShowBorrower {
+  viewBorrower: (rowdata: any) => void
+}
+
 function App() {
 
   //State of the main screen, dashboard is the default
@@ -50,9 +58,9 @@ function App() {
                 </div>
               )
             case parentPageState.paymentarchive:
-              return (<PaymentArchive />)
+              return (<PaymentArchive handleBorrowerRowDataState={handleBorrowerRowDataState} />)
             case parentPageState.borrowerarchive:
-              return (<BorrowerArchive />)
+              return (<BorrowerArchive handleBorrowerRowDataState={handleBorrowerRowDataState} />)
             case parentPageState.settings:
               //Not yet implemented
               return (<div>NOT IMPLEMENTED</div>)

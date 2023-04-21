@@ -5,6 +5,7 @@ import FilterTableGeneric from './table/FilterTableGeneric'
 import { parentPageState } from '../App';
 
 import * as db from '../../dbaccess/BorrowerPageUtils'
+import { BorrowerFormTemplate } from '../borrowerform/BorrowerForm';
 
 
 interface ReactTableProps {
@@ -86,6 +87,8 @@ const PaymentsSection = ({borrowerRowdata} : PaymentsSectionProps) => {
   };
 
   return (
+
+
     <div className="p-2 py-5">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h3 className="text-right">Payments</h3>
@@ -170,9 +173,7 @@ const PaymentsSection = ({borrowerRowdata} : PaymentsSectionProps) => {
   )
 }
 
-
 export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardState, returnState = parentPageState.dashboard }: ReactTableProps) {
-
   return (
     <div className="card shadow border-0 ps-4 pe-4">
       <div className="rounded bg-white mt-5">
@@ -182,46 +183,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
         <div className="row">
           <div className="col border-right">
             <div className="p-2 py-5">
-
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h3 className="text-right">Personal Info</h3>
-              </div>
-              <div className="row mt-2">
-                <div className="col-md-6"><label className="labels">First Name</label><input type="text" className="form-control" placeholder={borrowerRowdata.firstName} /></div>
-                <div className="col-md-6"><label className="labels">Last Name </label><input type="text" className="form-control" placeholder={borrowerRowdata.lastName} /></div>
-              </div>
-              <div className="row mt-2">
-                <div className="col-md-12"><label className="labels">Address</label><input type="text" className="form-control" placeholder={borrowerRowdata.address} /></div>
-              </div>
-              <div className="row mt-2">
-                <div className="col-md-4"><label className="labels">Province</label><input type="text" className="form-control" placeholder={borrowerRowdata.province} /></div>
-                <div className="col-md-4"><label className="labels">Postal Code</label><input type="text" className="form-control" placeholder={borrowerRowdata.postalCode} /></div>
-                <div className="col-md-4"><label className="labels">Apt. #</label><input type="text" className="form-control" placeholder={borrowerRowdata.address} /></div>
-              </div>
-
-
-              <div className="row mt-2">
-                <div className="col-md-6"><label className="labels">Phone Number</label><input type="text" className="form-control" placeholder={borrowerRowdata.phoneNumber} /></div>
-                <div className="col-md-6"><label className="labels">Email</label><input type="text" className="form-control" placeholder={borrowerRowdata.email} /></div>
-              </div>
-              <hr style={{ borderTop: "3px solid" }} />
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h3 className="text-right">Loan Info</h3>
-              </div>
-              <div className="row mt-2">
-                <div className="col-md-3"><label className="labels">Principal</label><input type="text" className="form-control" placeholder={borrowerRowdata.principal.toString()} disabled /></div>
-                <div className="col-md-3"><label className="labels">Interest (%)</label><input type="text" className="form-control" placeholder={borrowerRowdata.interest.toString()} disabled /></div>
-                <div className="col-md-3"><label className="labels">Term</label><input type="text" className="form-control" placeholder={borrowerRowdata.term.toString()} disabled /></div>
-                <div className="col-md-3"><label className="labels">P.P.P</label><input type="text" className="form-control" placeholder={borrowerRowdata.paymentperperiod.toString()} disabled /></div>
-              </div>
-              <div className="row mt-2">
-                <div className="col-md-6"><label className="labels">Start Date</label><input type="text" className="form-control" placeholder={borrowerRowdata.startdate} disabled /></div>
-                <div className="col-md-6"><label className="labels">Frequency</label><input type="text" className="form-control" placeholder={borrowerRowdata.frequency} disabled /></div>
-              </div>
-              <div className="row mt-2">
-                <div className="col-md-6"><label className="labels">Commissioner</label><input type="text" className="form-control" placeholder={borrowerRowdata.commissioner} disabled /></div>
-                <div className="col-md-6"><label className="labels">Commission Interest (%)</label><input type="text" className="form-control" placeholder={borrowerRowdata.interest.toString()} disabled /></div>
-              </div>
+              <BorrowerFormTemplate borrowerRowdata={borrowerRowdata}/>
             </div>
           </div>
           <div className="col">

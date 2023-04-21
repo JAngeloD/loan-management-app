@@ -66,6 +66,10 @@ export const loanInfoDefaults: LoanInfo = {
 export type  ArchivedPayments = PersonalInfo & PaymentInfo
 export type FullBorrowerInfo = PersonalInfo & LoanInfo
 
+export const fullBorrowerInfoDefaults: FullBorrowerInfo = {
+  ...personalInfoDefaults,
+  ...loanInfoDefaults
+}
 export const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',

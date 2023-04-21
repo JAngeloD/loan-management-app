@@ -13,24 +13,26 @@ interface ReactTableProps {
   returnState?: parentPageState
 }
 
+type PaymentsSectionProps = Pick<ReactTableProps, "borrowerRowdata">
+
 enum Action {
   "add",
   "edit"
 }
 
-export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardState, returnState = parentPageState.dashboard }: ReactTableProps) {
+const PaymentsSection = ({borrowerRowdata} : PaymentsSectionProps) => {
 
   const [validated, setValidated] = useState(false); // Result when adding or editing payments
   const [intent, setIntent] = useState<Action>(); // Stores user intent when altering payments
   const [show, setShow] = useState(false); // Hooks for handling modal viewing
   const [paymentRowdata, setPaymentRowdata] = useState<PaymentInfo>(paymentInfoDefaults); // Stores row data from payment table
-  const [formData, setFormData] = useState<PaymentInfo>(paymentInfoDefaults);
+  const [paymentsFormData, setPaymentsFormData] = useState<PaymentInfo>(paymentInfoDefaults);
 
   const handleShow = (paymentRowdata: any) => {
     if (paymentRowdata !== null) {
       setPaymentRowdata(paymentRowdata.original);
       setIntent(Action.edit)
-      setFormData(paymentRowdata.original)
+      setPaymentsFormData(paymentRowdata.original)
     }
     else {
       setPaymentRowdata(paymentInfoDefaults);
@@ -43,7 +45,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
 
   const handleClose = () => {
     setPaymentRowdata(paymentInfoDefaults)
-    setFormData(paymentInfoDefaults)
+    setPaymentsFormData(paymentInfoDefaults)
     setShow(false)
   }
 
@@ -52,7 +54,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
     let val = event.target.value
     if (event.target.type === "checkbox") val = event.target.checked
 
-    setFormData(formData => ({ ...formData, [name]: val }))
+    setPaymentsFormData(paymentsFormData => ({ ...paymentsFormData, [name]: val }))
   }
 
   const handleSubmit = (event: any) => {
@@ -74,14 +76,102 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
           break;
       }
 
-      console.log(formData)
+      console.log(paymentsFormData)
 
       setValidated(false);
       setShow(false);
     }
 
-    setFormData(paymentInfoDefaults)
+    setPaymentsFormData(paymentInfoDefaults)
   };
+
+  return (
+    <div className="p-2 py-5">
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h3 className="text-right">Payments</h3>
+        <Button variant="primary" onClick={() => { handleShow(null) }}>Add</Button>
+      </div>
+
+      <FilterTableGeneric data={db.getBorrowerPaymentsData(borrowerRowdata)}
+        columns={db.getBorrowerPaymentsColumns()}
+        cellClickFunction={handleShow}
+        sortState={[{
+          id: "paymentdate",
+          desc: false
+        }]} />
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        className="p-5"
+        backdrop="static"
+        keyboard={false}
+        onEnter={null}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{intent === Action.add ? "Add Payment" : "Edit Payment"}</Modal.Title>
+        </Modal.Header>
+
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Modal.Body>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Payment Date</Form.Label>
+              <Form.Control
+                name="paymentdate"
+                defaultValue={new Date(paymentRowdata.paymentdate).toISOString().substring(0, 10)}
+                onChange={handleChange}
+                onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
+                type="date"
+                required
+              />
+              <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter a valid date</Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Payment Amount</Form.Label>
+              <Form.Control
+                name="paymentval"
+                defaultValue={paymentRowdata.paymentval}
+                onChange={handleChange}
+                onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
+                min={0.00}
+                type="number"
+                required
+              />
+              <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter a valid payment amount ({">"}0)</Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Check defaultChecked={(paymentRowdata.paymentstatus) ? true : false}
+                name="paymentstatus"
+                type="checkbox"
+                label="Paid"
+                onChange={handleChange}
+                onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant='danger'>
+              Delete Payment
+            </Button>
+            <Button variant="primary" type="submit">
+              Save Payment
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+    </div>
+  )
+}
+
+
+export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardState, returnState = parentPageState.dashboard }: ReactTableProps) {
 
   return (
     <div className="card shadow border-0 ps-4 pe-4">
@@ -92,6 +182,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
         <div className="row">
           <div className="col border-right">
             <div className="p-2 py-5">
+
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h3 className="text-right">Personal Info</h3>
               </div>
@@ -107,6 +198,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                 <div className="col-md-4"><label className="labels">Postal Code</label><input type="text" className="form-control" placeholder={borrowerRowdata.postalCode} /></div>
                 <div className="col-md-4"><label className="labels">Apt. #</label><input type="text" className="form-control" placeholder={borrowerRowdata.address} /></div>
               </div>
+
 
               <div className="row mt-2">
                 <div className="col-md-6"><label className="labels">Phone Number</label><input type="text" className="form-control" placeholder={borrowerRowdata.phoneNumber} /></div>
@@ -133,89 +225,7 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
             </div>
           </div>
           <div className="col">
-            <div className="p-2 py-5">
-
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h3 className="text-right">Payments</h3>
-                <Button variant="primary" onClick={() => { handleShow(null) }}>Add</Button>
-              </div>
-
-              <FilterTableGeneric data={db.getBorrowerPaymentsData(borrowerRowdata)}
-                columns={db.getBorrowerPaymentsColumns()}
-                cellClickFunction={handleShow}
-                sortState={[{
-                  id: "paymentdate",
-                  desc: false
-                }]} />
-
-              <Modal
-                show={show}
-                onHide={handleClose}
-                className="p-5"
-                backdrop="static"
-                keyboard={false}
-                onEnter={null}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>{intent === Action.add ? "Add Payment" : "Edit Payment"}</Modal.Title>
-                </Modal.Header>
-
-                <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                  <Modal.Body>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>Payment Date</Form.Label>
-                      <Form.Control
-                        name="paymentdate"
-                        defaultValue={new Date(paymentRowdata.paymentdate).toISOString().substring(0, 10)}
-                        onChange={handleChange}
-                        onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
-                        type="date"
-                        required
-                      />
-                      <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
-                      <Form.Control.Feedback type="invalid">Please enter a valid date</Form.Control.Feedback>
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Label>Payment Amount</Form.Label>
-                      <Form.Control
-                        name="paymentval"
-                        defaultValue={paymentRowdata.paymentval}
-                        onChange={handleChange}
-                        onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
-                        min={0.00}
-                        type="number"
-                        required
-                      />
-                      <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
-                      <Form.Control.Feedback type="invalid">Please enter a valid payment amount ({">"}0)</Form.Control.Feedback>
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                      <Form.Check defaultChecked={(paymentRowdata.paymentstatus) ? true : false}
-                        name="paymentstatus"
-                        type="checkbox"
-                        label="Paid"
-                        onChange={handleChange}
-                        onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
-                      />
-                    </Form.Group>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                      Close
-                    </Button>
-                    <Button variant='danger'>
-                      Delete Payment
-                    </Button>
-                    <Button variant="primary" type="submit">
-                      Save Payment
-                    </Button>
-                  </Modal.Footer>
-                </Form>
-              </Modal>
-
-            </div>
+            <PaymentsSection borrowerRowdata={borrowerRowdata}/>
           </div>
         </div>
       </div>

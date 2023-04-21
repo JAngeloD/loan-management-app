@@ -37,7 +37,6 @@ export default function BorrowerForm() {
   return (
     <div className="container flex-shrink-1 bg-dark-subtle p-4 ">
       <div className="card shadow border-0 mb-7 p-4 mt-5">
-        <button onClick={()=> {console.log(loanData)}}>TEST</button>
         <div className="card-header bg-dark-subtle">
           <h5 className="mb-1">Add Borrower</h5>
         </div>

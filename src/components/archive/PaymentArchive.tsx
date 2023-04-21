@@ -8,6 +8,7 @@ import { BorrowerPageProps, ShowBorrower, parentPageState } from "../App";
 export default function PaymentArchive({handleBorrowerRowDataState}: BorrowerPageProps) {
 
   const viewBorrower = (row: any) => {
+    console.log(row.orignal)
     handleBorrowerRowDataState(parentPageState.borrowerdetails, row.original)
   }
 

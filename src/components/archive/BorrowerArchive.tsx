@@ -6,6 +6,7 @@ import { BorrowerPageProps, parentPageState } from "../App";
 export default function BorrowerArchive({handleBorrowerRowDataState}: BorrowerPageProps) {
 
   const viewBorrower = (row: any) => {
+    console.log(row)
     handleBorrowerRowDataState(parentPageState.borrowerdetails, row.original)
   }
 
@@ -19,10 +20,6 @@ export default function BorrowerArchive({handleBorrowerRowDataState}: BorrowerPa
           <FilterTableGeneric data={db.getAllArchivedPaymentsData()}
                               columns={db.getAllArchivedPaymentsColumns()}
                               cellClickFunction={viewBorrower}
-                              sortState={[{
-                                id: "paymentdate",
-                                desc: false
-                              }]}
                               showGlobalFilter
           />
         </div>

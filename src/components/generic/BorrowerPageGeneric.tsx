@@ -130,7 +130,6 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
                 <div className="col-md-6"><label className="labels">Commissioner</label><input type="text" className="form-control" placeholder={borrowerRowdata.commissioner} disabled /></div>
                 <div className="col-md-6"><label className="labels">Commission Interest (%)</label><input type="text" className="form-control" placeholder={borrowerRowdata.interest.toString()} disabled /></div>
               </div>
-              <div className="mt-5"><button className="btn btn-primary profile-button" type="button">Save Borrower Info</button></div>
             </div>
           </div>
           <div className="col">
@@ -142,12 +141,12 @@ export default function BorrowerPageGeneric({ borrowerRowdata, handleDashboardSt
               </div>
 
               <FilterTableGeneric data={db.getBorrowerPaymentsData(borrowerRowdata)}
-                                  columns={db.getBorrowerPaymentsColumns()}
-                                  cellClickFunction={handleShow}
-                                  sortState={[{
-                                    id: "paymentdate",
-                                    desc: false
-                                  }]}/>
+                columns={db.getBorrowerPaymentsColumns()}
+                cellClickFunction={handleShow}
+                sortState={[{
+                  id: "paymentdate",
+                  desc: false
+                }]} />
 
               <Modal
                 show={show}

@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap';
 import { FullBorrowerInfo, fullBorrowerInfoDefaults } from '../../dbaccess/Interfaces/Interfaces';
-import { AddBorrower } from '../../dbaccess/BorrowerFormUtils'
+import { AddBorrower, EditBorrower } from '../../dbaccess/BorrowerFormUtils'
 
 interface BorrowerFormProps {
   borrowerRowdata?: FullBorrowerInfo;
 }
 
 export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefaults }: BorrowerFormProps) => {
+  const isBorrowerPage = (borrowerRowdata === fullBorrowerInfoDefaults) //True: [Add Borrower] False: [Edit Borrower]
+
   const [validated, setValidated] = useState(false)
   const [borrowerData, setBorrowerData] = useState<FullBorrowerInfo>(borrowerRowdata)
 
@@ -26,7 +28,7 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
       return
     }
 
-    AddBorrower(borrowerData)
+    isBorrowerPage ? AddBorrower(borrowerData) : EditBorrower(borrowerData)
 
     setValidated(false);
   };
@@ -143,6 +145,8 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
           onChange={handleFormChange}
           onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
           type="number"
+          step={0.01}
+          min={1}
           required
         />
         <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
@@ -157,7 +161,7 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
           onChange={handleFormChange}
           onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
           type="number"
-          min={0.00}
+          min={0.01}
           max={100.00}
           step={0.01}
           required
@@ -258,7 +262,7 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
       </Form.Group>
 
       <Button className="mt-4" variant="primary" type="submit">
-        {((borrowerRowdata === fullBorrowerInfoDefaults) ? "Add Borrower" : "Edit Borrower")}
+        {((isBorrowerPage) ? "Add Borrower" : "Edit Borrower")}
       </Button>
     </Form>
   )

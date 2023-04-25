@@ -5,17 +5,39 @@
 */
 
 import React from 'react'
-import { PersonalInfo, LoanInfo, PaymentInfo, FullBorrowerInfo, currencyFormatter} from './Interfaces/Interfaces';
+import { PaymentInfo, FullBorrowerInfo, currencyFormatter} from './Interfaces/Interfaces';
 import { ColumnDef } from '@tanstack/react-table';
-import { GenerateFullBorrowerInfo } from './testingUtils/TestDataGenerator';
 const db = require('./Connection')
 
+/************************************************************************************************
+  PAYMENTS TABLE
+*************************************************************************************************/
+
+export function addPaymentToBorrower(payment: PaymentInfo, borrower: FullBorrowerInfo) {
+  //Add payment to database for the borrower
+
+  console.log("added payment to borrower")
+  console.log(payment)
+  console.log(borrower)
+}
+
+export function editPaymentFromBorrower(payment: PaymentInfo, borrower: FullBorrowerInfo) {
+  //Edit the payment for the borrower in the database
+
+  console.log("edited payment from borrower")
+  console.log(payment)
+  console.log(borrower)
+}
+
+//No need to edit this, populates the table using the rowdata retreived from the dashboard
 export function getBorrowerPaymentsData(borrowerRowdata: FullBorrowerInfo) {
   return React.useMemo<PaymentInfo[]>(
     () => borrowerRowdata.payments,
     []
   )
 }
+
+//No need to edit this, just more columns, add more if you think it needs it
 export function getBorrowerPaymentsColumns() {
   return React.useMemo<ColumnDef<PaymentInfo>[]>(
     () => [
@@ -40,12 +62,4 @@ export function getBorrowerPaymentsColumns() {
     ],
     []
   )
-}
-
-export function addPaymentToBorrower() {
-  console.log("added payment to borrower")
-}
-
-export function editPaymentFromBorrower() {
-  console.log("edited payment from borrower")
 }

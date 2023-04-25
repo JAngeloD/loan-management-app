@@ -70,14 +70,13 @@ const PaymentsSection = ({borrowerRowdata} : PaymentsSectionProps) => {
     else {
       switch (intent) {
         case Action.add:
-          db.addPaymentToBorrower();
+          db.addPaymentToBorrower(paymentsFormData, borrowerRowdata);
           break;
         case Action.edit:
-          db.editPaymentFromBorrower();
+          db.editPaymentFromBorrower(paymentsFormData, borrowerRowdata);
           break;
       }
 
-      console.log(paymentsFormData)
 
       setValidated(false);
       setShow(false);
@@ -87,8 +86,6 @@ const PaymentsSection = ({borrowerRowdata} : PaymentsSectionProps) => {
   };
 
   return (
-
-
     <div className="p-2 py-5">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h3 className="text-right">Payments</h3>
@@ -138,7 +135,8 @@ const PaymentsSection = ({borrowerRowdata} : PaymentsSectionProps) => {
                 defaultValue={paymentRowdata.paymentval}
                 onChange={handleChange}
                 onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
-                min={0.00}
+                step={0.01}
+                min={0.01}
                 type="number"
                 required
               />

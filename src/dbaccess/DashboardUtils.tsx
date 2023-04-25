@@ -30,7 +30,7 @@ export function getTotalCommissionAmount() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return "$5.00"
+  return "$45.00"
 }
 
 export function getLastCommissionAmount() {
@@ -39,7 +39,7 @@ export function getLastCommissionAmount() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return "$5.00"
+  return "$12.00"
 }
 
 export function getLastCommissionName() {
@@ -58,7 +58,7 @@ export function getCashOut() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return "$5.00"
+  return "$69.00"
 }
 export function getPaymentsLeft() {
   //Return the total term left for all borrowers
@@ -77,7 +77,7 @@ export function getProfit() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return "$5.00"
+  return "$29.00"
 }
 
 export function getLastInterestAmount() {
@@ -85,7 +85,7 @@ export function getLastInterestAmount() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return "$5.00"
+  return "$49.00"
 }
 
 export function getLastPaymentDate() {
@@ -113,7 +113,7 @@ export function getMoneyOnHand() {
   //RETURN TYPE: Currency, two decimal places with dollar sign ($)
   //EXAMPLE: $5.00
 
-  return "$5.00"
+  return "$49.00"
 }
 export function getLastPaymentAmount() {
   //Return the last payment amount gained from the most recent payment
@@ -128,16 +128,22 @@ export function getLastPaymentAmount() {
   PAYMENT/BORROWER TABLE
 *************************************************************************************************/
 
+export function getBorrowerOverViewListData(): FullBorrowerInfo[] {
+  const data = React.useMemo<FullBorrowerInfo[]>(
+    /**
+     * Return all data of all borrowers who have not payed off their loan so far
+     * RETURN TYPE: FullBorrowerInfo[]
+     * EXAMPLE: Look at function below, you have to return an array of FullBorrowerInfo objects
+    */
 
-
-export function getBorrowerOverViewListData() {
-  const data = React.useMemo(
     () => GenerateFullBorrowerInfo(30),
     []
   )
+
   return data
 }
 
+//Defines how data is being shown on the table, you don't need to touch it unless you want to add more columns
 export function getBorrowerOverViewListColumns() {
   const columns = React.useMemo<ColumnDef<FullBorrowerInfo>[]>(
     () => [
@@ -156,7 +162,7 @@ export function getBorrowerOverViewListColumns() {
         cell: (row) => row.renderValue(),
         accessorKey: "nextpaymentdate",
         accessorFn: (row) => {
-          return row.payments.sort(function(a, b) {
+          return row.payments.sort(function (a, b) {
             return new Date(a.paymentdate).getTime() - new Date(b.paymentdate).getTime();
           })[row.payments.length - 1].paymentdate
           //TODO: Need to sort it based on payment status

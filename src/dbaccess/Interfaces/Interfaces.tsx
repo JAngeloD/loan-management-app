@@ -63,7 +63,7 @@ export const loanInfoDefaults: LoanInfo = {
   payments: [paymentInfoDefaults]
 }
 
-export type  ArchivedPayments = PersonalInfo & PaymentInfo
+export type ArchivedPayments = PersonalInfo & PaymentInfo
 export type FullBorrowerInfo = PersonalInfo & LoanInfo
 
 export const fullBorrowerInfoDefaults: FullBorrowerInfo = {

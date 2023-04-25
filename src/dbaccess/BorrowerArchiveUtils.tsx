@@ -12,12 +12,20 @@ const db = require('./Connection')
 
 
 
-export function getAllArchivedPaymentsData() {
+export function getAllArchivedPaymentsData(): FullBorrowerInfo[] {
   return React.useMemo<FullBorrowerInfo[]>(
+    /**
+     * Get all borrowers from database that have their payments fully paid off
+     * See function below on how the return type looks like.
+     */
+
+
     () => GenerateFullBorrowerInfo(25),
     []
   )
 }
+
+//No need to change unless you want to add more columns
 export function getAllArchivedPaymentsColumns() {
   return React.useMemo<ColumnDef<FullBorrowerInfo>[]>(
     () => [

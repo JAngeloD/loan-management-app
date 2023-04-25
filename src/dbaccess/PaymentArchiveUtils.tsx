@@ -6,30 +6,38 @@
 
 import React from 'react'
 import { ColumnDef } from '@tanstack/react-table';
-import { GenerateFullBorrowerInfo } from './testingUtils/TestDataGenerator';
-import { FullBorrowerInfo } from './Interfaces/Interfaces';
+import { GenerateArchivedPayments } from './testingUtils/TestDataGenerator';
+import { ArchivedPayments } from './Interfaces/Interfaces';
 const db = require('./Connection')
 
-export function getAllArchivedPaymentsData() {
-  return React.useMemo<FullBorrowerInfo[]>(
-    () => GenerateFullBorrowerInfo(25),
+
+
+
+export function getAllArchivedPaymentsData(): ArchivedPayments[] {
+  return React.useMemo<ArchivedPayments[]>(
+    /**
+     * Get all payments from database that have been paid off
+     * See function below on how the return type looks like.
+     */
+
+    () => GenerateArchivedPayments(25),
     []
   )
 }
+
+//No need to change unless you want to add more columns
 export function getAllArchivedPaymentsColumns() {
-  return React.useMemo<ColumnDef<FullBorrowerInfo>[]>(
+  return React.useMemo<ColumnDef<ArchivedPayments>[]>(
     () => [
       {
         header: 'Payment Date',
         cell: (row) => row.renderValue(),
         accessorKey: 'paymentdate',
-        sortType: (a: FullBorrowerInfo, b: FullBorrowerInfo) => {
-          return new Date(a.payments[a.payments.length - 1].paymentdate).getTime() - new Date(b.payments[b.payments.length - 1].paymentdate).getTime()
+        sortType: (a: ArchivedPayments, b: ArchivedPayments) => {
+          return new Date(a.paymentdate).getTime() - new Date(b.paymentdate).getTime()
         },
         accessorFn: (row) => {
-          return row.payments.sort(function(a, b) {
-            return new Date(a.paymentdate).getTime() - new Date(b.paymentdate).getTime();
-          })[row.payments.length - 1].paymentdate
+          return (`$${row.paymentdate}`)
         },
       },
       {
@@ -42,7 +50,9 @@ export function getAllArchivedPaymentsColumns() {
       {
         header: 'Payment Amount',
         cell: (row) => row.renderValue(),
-        accessorKey: 'paymentval',
+        accessorFn: (row) => {
+          return (`$${row.paymentval}`)
+        },
       },
     ],
     []

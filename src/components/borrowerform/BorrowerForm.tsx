@@ -79,7 +79,7 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
         <Form.Control.Feedback type="invalid">Invalid</Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group className="col-md-4" >
+      <Form.Group className="col-md-6" >
         <Form.Label className="fw-semibold">Province</Form.Label>
         <Form.Control
           name="province"
@@ -93,25 +93,11 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
         <Form.Control.Feedback type="invalid">Invalid</Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group className="col-md-4" >
+      <Form.Group className="col-md-6" >
         <Form.Label className="fw-semibold">Postal Code</Form.Label>
         <Form.Control
           name="postalCode"
           defaultValue={borrowerData.postalCode}
-          onChange={handleFormChange}
-          onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
-          type="text"
-          required
-        />
-        <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
-        <Form.Control.Feedback type="invalid">Invalid</Form.Control.Feedback>
-      </Form.Group>
-
-      <Form.Group className="col-md-4" >
-        <Form.Label className="fw-semibold">Apt. #</Form.Label>
-        <Form.Control
-          disabled
-          defaultValue={""}
           onChange={handleFormChange}
           onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
           type="text"

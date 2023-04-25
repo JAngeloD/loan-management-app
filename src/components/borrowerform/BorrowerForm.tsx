@@ -73,7 +73,6 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
           onChange={handleFormChange}
           onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
           type="text"
-          required
         />
         <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">Invalid</Form.Control.Feedback>
@@ -87,7 +86,6 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
           onChange={handleFormChange}
           onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
           type="text"
-          required
         />
         <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">Invalid</Form.Control.Feedback>
@@ -101,7 +99,6 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
           onChange={handleFormChange}
           onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
           type="text"
-          required
         />
         <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">Invalid</Form.Control.Feedback>
@@ -115,7 +112,6 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
           onChange={handleFormChange}
           onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
           type="Phone"
-          required
         />
         <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">Invalid</Form.Control.Feedback>
@@ -129,7 +125,6 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
           onChange={handleFormChange}
           onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
           type="email"
-          required
         />
         <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">Invalid</Form.Control.Feedback>
@@ -219,6 +214,35 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
         <Form.Control.Feedback type="invalid">Invalid</Form.Control.Feedback>
       </Form.Group>
 
+      <Form.Group className="col-md-6" >
+        <Form.Label className="fw-semibold">Commissioner</Form.Label>
+        <Form.Control
+          name="commissioner"
+          defaultValue={borrowerData.commissioner}
+          onChange={handleFormChange}
+          onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
+          type="text"
+        />
+        <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">Invalid</Form.Control.Feedback>
+      </Form.Group>
+
+      <Form.Group className="col-md-6" >
+        <Form.Label className="fw-semibold">Commissioner's Interest</Form.Label>
+        <Form.Control
+          name="commissioninterest"
+          defaultValue={borrowerData.commissioninterest}
+          onChange={handleFormChange}
+          onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
+          type="number"
+          min={0.00}
+          max={100.00}
+          step={0.01}
+        />
+        <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">Invalid</Form.Control.Feedback>
+      </Form.Group>
+
       <Form.Group className="col-md-12 mt-4 mb-2" >
         <Form.Label className="fw-semibold">Remarks</Form.Label>
         <Form.Control
@@ -228,7 +252,6 @@ export const BorrowerFormTemplate = ({ borrowerRowdata = fullBorrowerInfoDefault
           onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
           as="textarea"
           style={{ height: '200px' }}
-          required
         />
         <Form.Control.Feedback type="valid">Valid</Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">Invalid</Form.Control.Feedback>
